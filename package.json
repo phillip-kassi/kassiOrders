@@ -2,13 +2,14 @@
   "name": "kass-order-app",
   "version": "10.16.0",
   "scripts": {
+    "start": "ng serve",
     "ng": "ng",
     "build": "ng build",
     "ng-build": "node server.js",
     "test": "node server.js",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "start": "node server.js"
+    "node": "node server.js"
   },
   "private": true,
   "dependencies": {
@@ -42,7 +43,6 @@
     "mongoose-deep-populate": "^3.1.1",
     "mongoose-paginate": "^5.0.3",
     "nodemailer": "^4.7.0",
-    "nodemon": "^1.19.4",
     "phantomjs-prebuilt": "^2.1.16",
     "rxjs": "~6.5.3",
     "tslib": "^1.10.0",
