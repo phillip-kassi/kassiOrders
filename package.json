@@ -1,6 +1,6 @@
 {
   "name": "kass-order-app",
-  "version": "0.0.0",
+  "version": "10.16.0",
   "scripts": {
     "ng": "ng",
     "build": "ng build",
