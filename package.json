@@ -1,14 +1,9 @@
 {
   "name": "kass-order-app",
-  "version": "10.16.0",
+  "version": "1.0.0",
   "scripts": {
-    "ng": "ng",
-    "ng build": "node server.js",
-    "start": "node server.js",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "test": "echo \"Error: no test specified\" && exiy 1",
+    "start": "node server.js"
   },
   "main": "server.js",
   "private": true,
