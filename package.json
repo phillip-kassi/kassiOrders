@@ -2,8 +2,8 @@
   "name": "kass-order-app",
   "version": "10.16.0",
   "scripts": {
-    "start": "ng serve",
     "ng": "ng",
+    "start": "ng serve",
     "build": "ng build",
     "ng-build": "node server.js",
     "test": "node server.js",
