@@ -36,15 +36,23 @@ exports.createOrder = (req, res) => {
         })
 
 
-
         var mailOptions = {
           from: kassiordersEmail,
           to: user.email,
           subject: 'Your Order',
-          text: 'did this work****************?',
-          html: '<h1>EEEEEEEEEEEEEEEEEEEE</h1>'
+          text: 'Order Summary:',
+          html: '<h1>Your Order ' + user.username + ' </h1>' +
+          ' <br>' +
+          '<table>' +
+          '<tr><td>Order Total</td><td>-</td><td>'+ 'R'+order.totalprice +'</td></tr>' +
+          '<tr><td>Order Date</td><td>-</td><td>' + Date.now()  +     '</td></tr>' +
+          '<tr><td>Contact</td><td>-</td><td>'+ user.cellnumber+      '</td></tr>' +
+          '<tr><td>Order ID</td><td>-</td><td>'+'order' + Date.now() + user.username + '</td></tr>' +
+          '</table>' + '<br><br>' +
+          'THANK YOU! <br>' +
+          'Kassi Orders!'
         }
-
+//'order-' + Date.now() + "-" + user.username
         transport.sendMail(mailOptions, function(err, info) {
           if(err)
           {
@@ -54,8 +62,6 @@ exports.createOrder = (req, res) => {
             console.log(info);
           }
         })
-
-        console.log('order-' + Date.now() + "-" + user.username,)
 
         res.json(user);
        })
