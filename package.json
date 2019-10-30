@@ -8,8 +8,7 @@
     "ng-build": "node server.js",
     "test": "node server.js",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-
+    "e2e": "ng e2e"
   },
   "main": "server.js",
   "private": true,
