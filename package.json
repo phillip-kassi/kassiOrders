@@ -5,10 +5,10 @@
     "ng": "ng",
     "start": "node server.js",
     "build": "ng build",
-    "ng-build": "node server.js",
-    "test": "node server.js",
+    "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "ng build --aot --prod"
   },
   "main": "server.js",
   "private": true,
