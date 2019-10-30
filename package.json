@@ -3,13 +3,13 @@
   "version": "10.16.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "ng-build": "node server.js",
     "test": "node server.js",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "node": "node server.js"
+
   },
   "main": "server.js",
   "private": true,
