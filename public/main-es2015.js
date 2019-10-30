@@ -1074,13 +1074,13 @@ let OrderService = class OrderService {
         this.httpClient = httpClient;
     }
     getClientOders(id) {
-        return this.httpClient.get('http://localhost:3001/api/users/' + id + '/orders');
+        return this.httpClient.get('api/users/' + id + '/orders');
     }
     getAllOrders() {
-        return this.httpClient.get('http://localhost:3001/api/orders/');
+        return this.httpClient.get('api/orders/');
     }
     createOrder(userID, orderList) {
-        return this.httpClient.post('http://localhost:3001/api/users/' + userID + '/order', orderList);
+        return this.httpClient.post('api/users/' + userID + '/order', orderList);
     }
 };
 OrderService.ctorParameters = () => [
@@ -1118,16 +1118,16 @@ let ProductService = class ProductService {
         this.httpClient = httpClient;
     }
     createProduct(product) {
-        return this.httpClient.post('http://localhost:3001/api/product', product);
+        return this.httpClient.post('api/product', product);
     }
     getProducts() {
-        return this.httpClient.get('http://localhost:3001/api/products');
+        return this.httpClient.get('api/products');
     }
     deleteProduct(id) {
-        return this.httpClient.delete('http://localhost:3001/api/products/' + id);
+        return this.httpClient.delete('api/products/' + id);
     }
     updateProduct(id, product) {
-        return this.httpClient.put('http://localhost:3001/api/products/' + id, product);
+        return this.httpClient.put('api/products/' + id, product);
     }
 };
 ProductService.ctorParameters = () => [
@@ -1166,19 +1166,19 @@ let UserService = class UserService {
     }
     getUsers(pageSize, currentPage) {
         const query = `?pageSize=${pageSize}&currentPage=${currentPage}`;
-        return this.httpClient.get('http://localhost:3001/api/users' + query);
+        return this.httpClient.get('api/users' + query);
     }
     getUser(id) {
-        return this.httpClient.get('http://localhost:3001/api/users/' + id);
+        return this.httpClient.get('users/' + id);
     }
     deleteUser(id) {
-        return this.httpClient.delete('http://localhost:3001/api/users/' + id);
+        return this.httpClient.delete('api/users/' + id);
     }
     createtUser(user) {
-        return this.httpClient.post('http://localhost:3001/api/signup', user);
+        return this.httpClient.post('api/signup', user);
     }
     checkUser(password, username) {
-        return this.httpClient.get('http://localhost:3001/api/user/' + username + '/' + password);
+        return this.httpClient.get('api/user/' + username + '/' + password);
     }
 };
 UserService.ctorParameters = () => [
