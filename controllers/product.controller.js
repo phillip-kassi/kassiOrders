@@ -20,14 +20,23 @@ exports.getProducts = (req, res) =>
 {
 var page =  req.query.page;
 var perPage = req.query.perPage;
+var filter = req.query.filter;
   const options = {
     page: parseInt(page),
-    limit: parseInt(perPage)
+    limit: parseInt(perPage),
+    sort: {name :'asc'}
   };
 
-  console.log(options)
+  //for filtering, check if the user wants to filter
+  const query = {};
+  if(filter)
+  {
+    //when filtering, set options to ignore the upper or lower cases and to accept incomplete words
+    query.name = {$regex: filter, $options: '-i'};
+  }
 
-Prouct.find().then(products => {
+
+Prouct.paginate(query, options).then(products => {
     res.json(products);
     console.log(products);
   }).catch(err => {

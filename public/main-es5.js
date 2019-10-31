@@ -61,7 +61,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<!-- <header style=\"position: static;\">\n\n  <nav class=\"navbar navbar-expand-md navbar-dark bg-dark\">\n    <div><a class=\"navbar-brand\" href=\"\">KassiApp</a></div>\n\n\n  <ul class=\"navbar-nav navbar-collapse justify-content-end\">\n    <li class=\"nav-link\"><a class=\"text-light\" [routerLink]=\"['/home/dashboard']\" routerLinkActive=\"router-link-active\" >Dashboard</a></li>\n    <li class=\"nav-link\"><a class=\"text-light\">Sign Out</a></li>\n  </ul>\n  <form class=\"form-inline my-2 my-lg-0\">\n    <input class=\"form-control mr-sm-2\" type=\"search\" placeholder=\"Search Shop...\" name=\"search\" aria-label=\"Search\">\n    <button class=\"btn btn-outline-success my-2 my-sm-0\" routerLinkActive=\"router-link-active\">Search</button>\n  </form>\n\n\n\n\n</nav>\n</header> -->\n\n<div class=\"row\">\n\n  <div class=\"col-lg-12\">\n\n    <mat-toolbar color='primary'>\n\n      <span><a [routerLink]=\"['/']\" >Kassi Order</a></span>\n      <ul>\n          <li>\n             <a mat-button [routerLink]=\"['/profile']\" routerLinkActive=\"mat-accent\">Profile</a>\n          </li>\n        </ul>\n        <ul>\n            <li>\n               <a mat-button [routerLink]=\"['/order']\">Order</a>\n            </li>\n          </ul>\n      <span class=\"spacer\"></span>\n      <ul>\n          <li>\n             <a mat-button [routerLink]=\"['/signup']\" routerLinkActive=\"mat-accent\">Sign Up</a>\n          </li>\n        </ul>\n      <ul>\n       <li>\n          <a mat-button [routerLink]=\"['/dashboard']\" routerLinkActive=\"mat-accent\" >Dashboard</a>\n       </li>\n     </ul>\n     <ul>\n        <li>\n           <a mat-button [routerLink]=\"['/signin']\" routerLinkActive=\"mat-accent\">Sign in</a>\n        </li>\n      </ul>\n      <ul>\n          <li>\n             <a mat-button [routerLink]=\"['/home']\" >Sign Out</a>\n          </li>\n        </ul>\n    </mat-toolbar>\n\n  </div>\n\n</div>\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("<!-- <header style=\"position: static;\">\n\n  <nav class=\"navbar navbar-expand-md navbar-dark bg-dark\">\n    <div><a class=\"navbar-brand\" href=\"\">KassiApp</a></div>\n\n\n  <ul class=\"navbar-nav navbar-collapse justify-content-end\">\n    <li class=\"nav-link\"><a class=\"text-light\" [routerLink]=\"['/home/dashboard']\" routerLinkActive=\"router-link-active\" >Dashboard</a></li>\n    <li class=\"nav-link\"><a class=\"text-light\">Sign Out</a></li>\n  </ul>\n  <form class=\"form-inline my-2 my-lg-0\">\n    <input class=\"form-control mr-sm-2\" type=\"search\" placeholder=\"Search Shop...\" name=\"search\" aria-label=\"Search\">\n    <button class=\"btn btn-outline-success my-2 my-sm-0\" routerLinkActive=\"router-link-active\">Search</button>\n  </form>\n\n\n\n\n</nav>\n</header> -->\n\n<div class=\"row\">\n\n    <mat-toolbar color='primary'>\n\n      <span><a [routerLink]=\"['/']\" >Kassi Order</a></span>\n      <ul>\n          <li>\n             <a mat-button [routerLink]=\"['/profile']\" routerLinkActive=\"mat-accent\">Profile</a>\n          </li>\n        </ul>\n        <ul>\n            <li>\n               <a mat-button [routerLink]=\"['/order']\">Order</a>\n            </li>\n          </ul>\n      <span class=\"spacer\"></span>\n      <ul>\n          <li>\n             <a mat-button [routerLink]=\"['/signup']\" routerLinkActive=\"mat-accent\">Sign Up</a>\n          </li>\n        </ul>\n      <ul>\n       <li>\n          <a mat-button [routerLink]=\"['/dashboard']\" routerLinkActive=\"mat-accent\" >Dashboard</a>\n       </li>\n     </ul>\n     <ul>\n        <li>\n           <a mat-button [routerLink]=\"['/signin']\" routerLinkActive=\"mat-accent\">Sign in</a>\n        </li>\n      </ul>\n      <ul>\n          <li>\n             <a mat-button [routerLink]=\"['/home']\" >Sign Out</a>\n          </li>\n        </ul>\n    </mat-toolbar>\n\n</div>\n");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/order/order.component.html": 
@@ -72,7 +72,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("\n<div class=\"container-fluid\">\n    <br>\n    <mat-progress-bar\n      mode=\"query\">\n    </mat-progress-bar>\n    <h1 >Shop Here :)</h1>\n    <br>\n    <mat-card>\n    <div class=\"row\">\n      <div class=\"col-md-6\">\n        <table  class=\"table mat-table\">\n          <thead>\n            <th>Name</th>\n            <th>Price</th>\n            <th>Quantity</th>\n            <th>Add To List</th>\n            <th>Remove From List</th>\n          </thead>\n          <tbody>\n            <tr *ngFor=\"let product of products\">\n              <td>{{product.name}}</td>\n              <td>R{{product.price}}</td>\n              <td>\n                <!--  <mat-slider aria-label=\"Quantity\" min = '1' max = '20' step = '2' thumbLabel tickInterval=\"1\" invert ></mat-slider> -->\n                <mat-select placeholder = 'Quantity' #selectetedItem id='product._id'>\n                  <mat-option value= 1 >1</mat-option>\n                  <mat-option value=\"2\">2</mat-option>\n                  <mat-option value=\"6\">6</mat-option>\n                  <mat-option value=\"8\">8</mat-option>\n                  <mat-option value=\"10\">10</mat-option>\n                  <mat-option value=\"15\">15</mat-option>\n                  <mat-option value=\"20\">20</mat-option>\n                </mat-select>\n              </td>\n              <td><button class=\"btn btn-outline-success\" [disabled] = '!selectetedItem.selected' (click)=\"addTolist(selectetedItem, product._id)\">Add 2 List</button></td>\n              <td><button class=\"btn btn-outline-warning\" [disabled] = '!selectetedItem.selected' (click)=\"removeFromlist(selectetedItem, product._id)\">Remove from list</button></td>\n            </tr>\n          </tbody>\n        </table>\n      </div>\n\n      <div class=\"col-md-2\">\n\n      </div>\n      <div class=\"col-md-3\" *ngIf=\"viewList\">\n        <h3>Total Due: R{{total}}</h3>\n\n    <mat-list>\n      <mat-list-item *ngFor=\"let product of productList2\">{{ product.name }}</mat-list-item>\n    </mat-list>\n    <button class=\"btn btn-outline-primary\" [disabled] = \"isMessage\" (click)=\"placeOrder()\">PLACE ORDER</button>\n      </div>\n    </div>\n\n    <div class=\"row\" *ngIf=\"isMessage\">\n        <div class=\"col-lg-12\">\n            <div [class]=\"errorMessage\">\n              {{message}}\n            </div>\n        </div>\n    </div>\n  </mat-card>\n\n\n</div>\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("\n<div class=\"container-fluid\">\n    <br>\n    <mat-progress-bar\n      mode=\"buffer\"\n      *ngIf=\"isLoading\">\n    </mat-progress-bar>\n    <h1 class=\"display-4\" >Shop Here <mat-icon color='primary'>add_shopping_cart</mat-icon></h1>\n    <br>\n    <br>\n    <mat-form-field  color='primary'>\n    <input placeholder=\"search for product here\" matInput (keyup) = \"filterText($event.target.value)\">\n    </mat-form-field>\n    <mat-card>\n    <div class=\"row\">\n      <div class=\"col-md-7\">\n        <table  class=\"table table-light\">\n          <thead>\n            <th>Name</th>\n            <th>Price</th>\n            <th>Quantity</th>\n            <th>Add To List</th>\n            <th>Remove From List</th>\n          </thead>\n          <tbody>\n            <tr *ngFor=\"let product of products\">\n              <td>{{product.name}}</td>\n              <td>R{{product.price}}</td>\n              <td>\n                <!--  <mat-slider aria-label=\"Quantity\" min = '1' max = '20' step = '2' thumbLabel tickInterval=\"1\" invert ></mat-slider> -->\n                <mat-select placeholder = 'Quantity' #selectetedItem id='product._id'>\n                  <mat-option value= 1 >1</mat-option>\n                  <mat-option value=\"2\">2</mat-option>\n                  <mat-option value=\"6\">6</mat-option>\n                  <mat-option value=\"8\">8</mat-option>\n                  <mat-option value=\"10\">10</mat-option>\n                  <mat-option value=\"15\">15</mat-option>\n                  <mat-option value=\"20\">20</mat-option>\n                </mat-select>\n              </td>\n              <td><button mat-raised-button color='primary'[disabled] = '!selectetedItem.selected' (click)=\"addTolist(selectetedItem, product._id)\">ADD</button></td>\n              <td><button mat-raised-button color='warn' [disabled] = '!selectetedItem.selected' (click)=\"removeFromlist(selectetedItem, product._id)\">REMOVE</button></td>\n            </tr>\n          </tbody>\n        </table>\n        <!-- Paginator component -->\n        <mat-paginator pageIndex = '0' #paginator [length]='docsTotal' pageSize = 4 [showFirstLastButtons] = \"true\" [pageSizeOptions]='[2, 4, 6, 8, 10]'></mat-paginator>\n\n      </div>\n\n      <div class=\"col-md-1\">\n\n      </div>\n      <div class=\"col-sm-3\" *ngIf=\"viewList\">\n        <h3>Total Due: R{{total}}</h3> <br> <button mat-raised-button color='accent' [disabled] = \"isMessage\" (click)=\"placeOrder()\">ORDER</button>\n\n    <mat-list>\n      <mat-list-item *ngFor=\"let product of productList2\">{{ product.name }}</mat-list-item>\n    </mat-list>\n\n      </div>\n    </div>\n\n    <div class=\"row\" *ngIf=\"isMessage\">\n        <div class=\"col-lg-12\">\n            <div [class]=\"errorMessage\">\n              {{message}}\n            </div>\n        </div>\n    </div>\n  </mat-card>\n\n\n</div>\n");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/profile/profile.component.html": 
@@ -453,7 +453,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("mat-form-field {\r\n  width: 100%;\r\n}\r\n\r\nmat-spinner {\r\n  margin: auto;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9hcHAvYXBwLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxXQUFXO0FBQ2I7O0FBRUE7RUFDRSxZQUFZO0FBQ2QiLCJmaWxlIjoiLi4vc3JjL2FwcC9hcHAuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIm1hdC1mb3JtLWZpZWxkIHtcclxuICB3aWR0aDogMTAwJTtcclxufVxyXG5cclxubWF0LXNwaW5uZXIge1xyXG4gIG1hcmdpbjogYXV0bztcclxufVxyXG4iXX0= */");
+            /* harmony default export */ __webpack_exports__["default"] = ("mat-form-field {\r\n  width: 100%;\r\n}\r\n\r\nmat-spinner {\r\n  margin: auto;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXBwLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxXQUFXO0FBQ2I7O0FBRUE7RUFDRSxZQUFZO0FBQ2QiLCJmaWxlIjoic3JjL2FwcC9hcHAuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIm1hdC1mb3JtLWZpZWxkIHtcclxuICB3aWR0aDogMTAwJTtcclxufVxyXG5cclxubWF0LXNwaW5uZXIge1xyXG4gIG1hcmdpbjogYXV0bztcclxufVxyXG4iXX0= */");
             /***/ 
         }),
         /***/ "./src/app/app.component.ts": 
@@ -543,7 +543,8 @@
                         _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatSelectModule"],
                         _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatProgressBarModule"],
                         _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatListModule"],
-                        _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatSliderModule"]
+                        _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatSliderModule"],
+                        _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatFormFieldModule"]
                     ],
                     providers: [],
                     bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
@@ -559,7 +560,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("mat-paginator {\r\n  margin-top: 1rem;\r\n}\r\n.material-icons {\r\n  font-size: 50px;\r\n}\r\n#add_alert {\r\n  font-size: 28px;\r\n  color: red;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9hcHAvZGFzaGJvYXJkL2Rhc2hib2FyZC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsZ0JBQWdCO0FBQ2xCO0FBQ0E7RUFDRSxlQUFlO0FBQ2pCO0FBRUE7RUFDRSxlQUFlO0VBQ2YsVUFBVTtBQUNaIiwiZmlsZSI6Ii4uL3NyYy9hcHAvZGFzaGJvYXJkL2Rhc2hib2FyZC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsibWF0LXBhZ2luYXRvciB7XHJcbiAgbWFyZ2luLXRvcDogMXJlbTtcclxufVxyXG4ubWF0ZXJpYWwtaWNvbnMge1xyXG4gIGZvbnQtc2l6ZTogNTBweDtcclxufVxyXG5cclxuI2FkZF9hbGVydCB7XHJcbiAgZm9udC1zaXplOiAyOHB4O1xyXG4gIGNvbG9yOiByZWQ7XHJcbn1cclxuIl19 */");
+            /* harmony default export */ __webpack_exports__["default"] = ("mat-paginator {\r\n  margin-top: 1rem;\r\n}\r\n.material-icons {\r\n  font-size: 50px;\r\n}\r\n#add_alert {\r\n  font-size: 28px;\r\n  color: red;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvZGFzaGJvYXJkL2Rhc2hib2FyZC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsZ0JBQWdCO0FBQ2xCO0FBQ0E7RUFDRSxlQUFlO0FBQ2pCO0FBRUE7RUFDRSxlQUFlO0VBQ2YsVUFBVTtBQUNaIiwiZmlsZSI6InNyYy9hcHAvZGFzaGJvYXJkL2Rhc2hib2FyZC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsibWF0LXBhZ2luYXRvciB7XHJcbiAgbWFyZ2luLXRvcDogMXJlbTtcclxufVxyXG4ubWF0ZXJpYWwtaWNvbnMge1xyXG4gIGZvbnQtc2l6ZTogNTBweDtcclxufVxyXG5cclxuI2FkZF9hbGVydCB7XHJcbiAgZm9udC1zaXplOiAyOHB4O1xyXG4gIGNvbG9yOiByZWQ7XHJcbn1cclxuIl19 */");
             /***/ 
         }),
         /***/ "./src/app/dashboard/dashboard.component.ts": 
@@ -599,18 +600,6 @@
                     this.isAddNewProduct = false;
                     this.isEditProduct = false;
                 }
-                // @ViewChild(MatPaginator) paginator: MatPaginator;
-                // clickme() {
-                //   this.products.push(this.Quantity);
-                //   console.log(this.products);
-                // }
-                // clickme2() {
-                //   let orderString = '';
-                //   this.products.forEach(element => {
-                //     orderString += element + '#';
-                //   });
-                //   console.log(orderString);
-                // }
                 DashboardComponent.prototype.viewUserOrders = function (id) {
                     var _this = this;
                     this.viewOrders = true;
@@ -624,7 +613,9 @@
                     });
                 };
                 DashboardComponent.prototype.deleteUser = function (id) {
+                    var _this = this;
                     this.userService.deleteUser(id).subscribe(function (data) {
+                        _this.getUsers();
                         console.log(data);
                     }, function (err) {
                         console.log(err);
@@ -673,6 +664,7 @@
                 };
                 // adding a product to database
                 DashboardComponent.prototype.addProduct = function (ngform) {
+                    var _this = this;
                     if (ngform) {
                         try {
                             console.log(ngform.value);
@@ -697,6 +689,7 @@
                             this.productService.createProduct(product_1).subscribe(function (result) {
                                 console.log('got here and all that');
                                 console.log(product_1);
+                                _this.getProducts();
                             }, function (err) {
                                 console.log(err);
                             });
@@ -724,8 +717,8 @@
                 // to get all products
                 DashboardComponent.prototype.getProducts = function () {
                     var _this = this;
-                    this.productService.getProducts().subscribe(function (products) {
-                        _this.products = products;
+                    this.productService.getProducts({ page: 1, perPage: 10, filter: '' }).subscribe(function (products) {
+                        _this.products = products.docs;
                         console.log(_this.products);
                     }, function (err) {
                         console.log(err);
@@ -733,8 +726,10 @@
                 };
                 // FOR PRODUCTS
                 DashboardComponent.prototype.deleteProduct = function (id) {
+                    var _this = this;
                     this.productService.deleteProduct(id).subscribe(function (product) {
                         console.log(product);
+                        _this.getProducts();
                     }, function (err) {
                         console.log(err);
                     });
@@ -789,7 +784,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = (".footer{\r\n  position: fixed;\r\n  bottom: 0;\r\n  width: 100%;\r\n  height: 40px;\r\n  background-color: black;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9hcHAvZm9vdGVyL2Zvb3Rlci5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsZUFBZTtFQUNmLFNBQVM7RUFDVCxXQUFXO0VBQ1gsWUFBWTtFQUNaLHVCQUF1QjtBQUN6QiIsImZpbGUiOiIuLi9zcmMvYXBwL2Zvb3Rlci9mb290ZXIuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5mb290ZXJ7XHJcbiAgcG9zaXRpb246IGZpeGVkO1xyXG4gIGJvdHRvbTogMDtcclxuICB3aWR0aDogMTAwJTtcclxuICBoZWlnaHQ6IDQwcHg7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogYmxhY2s7XHJcbn1cclxuIl19 */");
+            /* harmony default export */ __webpack_exports__["default"] = (".footer{\r\n  position: fixed;\r\n  bottom: 0;\r\n  width: 100%;\r\n  height: 40px;\r\n  background-color: black;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvZm9vdGVyL2Zvb3Rlci5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsZUFBZTtFQUNmLFNBQVM7RUFDVCxXQUFXO0VBQ1gsWUFBWTtFQUNaLHVCQUF1QjtBQUN6QiIsImZpbGUiOiJzcmMvYXBwL2Zvb3Rlci9mb290ZXIuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5mb290ZXJ7XHJcbiAgcG9zaXRpb246IGZpeGVkO1xyXG4gIGJvdHRvbTogMDtcclxuICB3aWR0aDogMTAwJTtcclxuICBoZWlnaHQ6IDQwcHg7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogYmxhY2s7XHJcbn1cclxuIl19 */");
             /***/ 
         }),
         /***/ "./src/app/footer/footer.component.ts": 
@@ -828,7 +823,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = (".menu{\r\n  position: fixed;\r\n  bottom: 0;\r\n  width: 100%;\r\n  height: 40px;\r\n}\r\nul {\r\n  list-style: none;\r\n  padding: 0%;\r\n  margin: 0;\r\n}\r\na {\r\n  text-decoration: none;\r\n  color: white;\r\n  size: 30px;\r\n}\r\n.spacer {\r\n  flex: 1 1 auto;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9hcHAvbWVudS9tZW51LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxlQUFlO0VBQ2YsU0FBUztFQUNULFdBQVc7RUFDWCxZQUFZO0FBQ2Q7QUFDQTtFQUNFLGdCQUFnQjtFQUNoQixXQUFXO0VBQ1gsU0FBUztBQUNYO0FBRUE7RUFDRSxxQkFBcUI7RUFDckIsWUFBWTtFQUNaLFVBQVU7QUFDWjtBQUVBO0VBQ0UsY0FBYztBQUNoQiIsImZpbGUiOiIuLi9zcmMvYXBwL21lbnUvbWVudS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLm1lbnV7XHJcbiAgcG9zaXRpb246IGZpeGVkO1xyXG4gIGJvdHRvbTogMDtcclxuICB3aWR0aDogMTAwJTtcclxuICBoZWlnaHQ6IDQwcHg7XHJcbn1cclxudWwge1xyXG4gIGxpc3Qtc3R5bGU6IG5vbmU7XHJcbiAgcGFkZGluZzogMCU7XHJcbiAgbWFyZ2luOiAwO1xyXG59XHJcblxyXG5hIHtcclxuICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XHJcbiAgY29sb3I6IHdoaXRlO1xyXG4gIHNpemU6IDMwcHg7XHJcbn1cclxuXHJcbi5zcGFjZXIge1xyXG4gIGZsZXg6IDEgMSBhdXRvO1xyXG59XHJcbiJdfQ== */");
+            /* harmony default export */ __webpack_exports__["default"] = (".menu{\r\n  position: fixed;\r\n  bottom: 0;\r\n  width: 100%;\r\n  height: 40px;\r\n}\r\nul {\r\n  list-style: none;\r\n  padding: 0%;\r\n  margin: 0;\r\n}\r\na {\r\n  text-decoration: none;\r\n  color: white;\r\n  size: 30px;\r\n}\r\n.spacer {\r\n  flex: 1 1 auto;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbWVudS9tZW51LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxlQUFlO0VBQ2YsU0FBUztFQUNULFdBQVc7RUFDWCxZQUFZO0FBQ2Q7QUFDQTtFQUNFLGdCQUFnQjtFQUNoQixXQUFXO0VBQ1gsU0FBUztBQUNYO0FBRUE7RUFDRSxxQkFBcUI7RUFDckIsWUFBWTtFQUNaLFVBQVU7QUFDWjtBQUVBO0VBQ0UsY0FBYztBQUNoQiIsImZpbGUiOiJzcmMvYXBwL21lbnUvbWVudS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLm1lbnV7XHJcbiAgcG9zaXRpb246IGZpeGVkO1xyXG4gIGJvdHRvbTogMDtcclxuICB3aWR0aDogMTAwJTtcclxuICBoZWlnaHQ6IDQwcHg7XHJcbn1cclxudWwge1xyXG4gIGxpc3Qtc3R5bGU6IG5vbmU7XHJcbiAgcGFkZGluZzogMCU7XHJcbiAgbWFyZ2luOiAwO1xyXG59XHJcblxyXG5hIHtcclxuICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XHJcbiAgY29sb3I6IHdoaXRlO1xyXG4gIHNpemU6IDMwcHg7XHJcbn1cclxuXHJcbi5zcGFjZXIge1xyXG4gIGZsZXg6IDEgMSBhdXRvO1xyXG59XHJcbiJdfQ== */");
             /***/ 
         }),
         /***/ "./src/app/menu/menu.component.ts": 
@@ -867,7 +862,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIuLi9zcmMvYXBwL29yZGVyL29yZGVyLmNvbXBvbmVudC5jc3MifQ== */");
+            /* harmony default export */ __webpack_exports__["default"] = (".material-icons {\r\n  font-size: 50px;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvb3JkZXIvb3JkZXIuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGVBQWU7QUFDakIiLCJmaWxlIjoic3JjL2FwcC9vcmRlci9vcmRlci5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLm1hdGVyaWFsLWljb25zIHtcclxuICBmb250LXNpemU6IDUwcHg7XHJcbn1cclxuIl19 */");
             /***/ 
         }),
         /***/ "./src/app/order/order.component.ts": 
@@ -883,10 +878,16 @@
             /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
             /* harmony import */ var _services_product_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/product.service */ "./src/app/services/product.service.ts");
             /* harmony import */ var _services_order_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/order.service */ "./src/app/services/order.service.ts");
+            /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
             var OrderComponent = /** @class */ (function () {
+                // create a viewChild to scout the dom
                 function OrderComponent(productService, orderService) {
                     this.productService = productService;
                     this.orderService = orderService;
+                    // create docTotal to store amout of documents
+                    this.docsTotal = 0;
+                    // for when the compnent is looading
+                    this.isLoading = false;
                     this.productsList = [];
                     this.productList2 = [];
                     this.total = 0;
@@ -901,8 +902,23 @@
                 }
                 OrderComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this.productService.getProducts().subscribe(function (products) {
-                        _this.products = products;
+                    this.isLoading = true;
+                    this.paginator.page.subscribe(function (data) {
+                        _this.productService.getProducts({ page: ++data.pageIndex, perPage: data.pageSize, filter: '' }).subscribe(function (products) {
+                            _this.products = products.docs;
+                            _this.docsTotal = products.total;
+                        }, function (err) {
+                        });
+                    });
+                    this.getProducts();
+                    this.isLoading = false;
+                };
+                // get products on load
+                OrderComponent.prototype.getProducts = function () {
+                    var _this = this;
+                    this.productService.getProducts({ page: 1, perPage: 5, filter: '' }).subscribe(function (products) {
+                        _this.products = products.docs;
+                        _this.docsTotal = products.total;
                     }, function (err) {
                         console.log(err);
                     });
@@ -973,12 +989,31 @@
                         }
                     });
                 };
+                // method to filter
+                OrderComponent.prototype.filterText = function (filterText) {
+                    var _this = this;
+                    this.isLoading = true;
+                    filterText = filterText.trim();
+                    this.paginator.pageIndex = 0;
+                    this.productService.getProducts({ page: ++this.paginator.pageIndex,
+                        perPage: this.paginator.pageSize,
+                        filter: filterText }).subscribe(function (products) {
+                        _this.products = products.docs;
+                        _this.docsTotal = products.total;
+                    }, function (err) {
+                    });
+                    this.isLoading = false;
+                };
                 return OrderComponent;
             }());
             OrderComponent.ctorParameters = function () { return [
                 { type: _services_product_service__WEBPACK_IMPORTED_MODULE_2__["ProductService"] },
                 { type: _services_order_service__WEBPACK_IMPORTED_MODULE_3__["OrderService"] }
             ]; };
+            tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_angular_material__WEBPACK_IMPORTED_MODULE_4__["MatPaginator"], { static: true }),
+                tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatPaginator"])
+            ], OrderComponent.prototype, "paginator", void 0);
             OrderComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
                     selector: 'app-order',
@@ -997,7 +1032,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIuLi9zcmMvYXBwL3Byb2ZpbGUvcHJvZmlsZS5jb21wb25lbnQuY3NzIn0= */");
+            /* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3Byb2ZpbGUvcHJvZmlsZS5jb21wb25lbnQuY3NzIn0= */");
             /***/ 
         }),
         /***/ "./src/app/profile/profile.component.ts": 
@@ -1060,13 +1095,13 @@
                     this.httpClient = httpClient;
                 }
                 OrderService.prototype.getClientOders = function (id) {
-                    return this.httpClient.get('api/users/' + id + '/orders');
+                    return this.httpClient.get('http://localhost:3001/api/users/' + id + '/orders');
                 };
                 OrderService.prototype.getAllOrders = function () {
-                    return this.httpClient.get('api/orders/');
+                    return this.httpClient.get('http://localhost:3001/api/orders/');
                 };
                 OrderService.prototype.createOrder = function (userID, orderList) {
-                    return this.httpClient.post('api/users/' + userID + '/order', orderList);
+                    return this.httpClient.post('http://localhost:3001/api/users/' + userID + '/order', orderList);
                 };
                 return OrderService;
             }());
@@ -1098,16 +1133,17 @@
                     this.httpClient = httpClient;
                 }
                 ProductService.prototype.createProduct = function (product) {
-                    return this.httpClient.post('api/product', product);
+                    return this.httpClient.post('http://localhost:3001/api/product', product);
                 };
-                ProductService.prototype.getProducts = function () {
-                    return this.httpClient.get('api/products');
+                ProductService.prototype.getProducts = function (_a) {
+                    var page = _a.page, perPage = _a.perPage, filter = _a.filter;
+                    return this.httpClient.get('http://localhost:3001/api/products' + ("?page=" + page + "&perPage=" + perPage + "&filter=" + filter));
                 };
                 ProductService.prototype.deleteProduct = function (id) {
-                    return this.httpClient.delete('api/products/' + id);
+                    return this.httpClient.delete('http://localhost:3001/api/products/' + id);
                 };
                 ProductService.prototype.updateProduct = function (id, product) {
-                    return this.httpClient.put('api/products/' + id, product);
+                    return this.httpClient.put('http://localhost:3001/api/products/' + id, product);
                 };
                 return ProductService;
             }());
@@ -1140,19 +1176,19 @@
                 }
                 UserService.prototype.getUsers = function (pageSize, currentPage) {
                     var query = "?pageSize=" + pageSize + "&currentPage=" + currentPage;
-                    return this.httpClient.get('api/users' + query);
+                    return this.httpClient.get('http://localhost:3001/api/users' + query);
                 };
                 UserService.prototype.getUser = function (id) {
                     return this.httpClient.get('users/' + id);
                 };
                 UserService.prototype.deleteUser = function (id) {
-                    return this.httpClient.delete('api/users/' + id);
+                    return this.httpClient.delete('http://localhost:3001/api/users/' + id);
                 };
                 UserService.prototype.createtUser = function (user) {
-                    return this.httpClient.post('api/signup', user);
+                    return this.httpClient.post('http://localhost:3001/api/signup', user);
                 };
                 UserService.prototype.checkUser = function (password, username) {
-                    return this.httpClient.get('api/user/' + username + '/' + password);
+                    return this.httpClient.get('http://localhost:3001/api/user/' + username + '/' + password);
                 };
                 return UserService;
             }());
@@ -1175,7 +1211,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("mat-form-field {\r\n  width: 100%;\r\n}\r\n\r\nmat-spinner {\r\n  margin: auto;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9hcHAvc2lnbnVwL3NpZ251cC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsV0FBVztBQUNiOztBQUVBO0VBQ0UsWUFBWTtBQUNkIiwiZmlsZSI6Ii4uL3NyYy9hcHAvc2lnbnVwL3NpZ251cC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsibWF0LWZvcm0tZmllbGQge1xyXG4gIHdpZHRoOiAxMDAlO1xyXG59XHJcblxyXG5tYXQtc3Bpbm5lciB7XHJcbiAgbWFyZ2luOiBhdXRvO1xyXG59XHJcbiJdfQ== */");
+            /* harmony default export */ __webpack_exports__["default"] = ("mat-form-field {\r\n  width: 100%;\r\n}\r\n\r\nmat-spinner {\r\n  margin: auto;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2lnbnVwL3NpZ251cC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsV0FBVztBQUNiOztBQUVBO0VBQ0UsWUFBWTtBQUNkIiwiZmlsZSI6InNyYy9hcHAvc2lnbnVwL3NpZ251cC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsibWF0LWZvcm0tZmllbGQge1xyXG4gIHdpZHRoOiAxMDAlO1xyXG59XHJcblxyXG5tYXQtc3Bpbm5lciB7XHJcbiAgbWFyZ2luOiBhdXRvO1xyXG59XHJcbiJdfQ== */");
             /***/ 
         }),
         /***/ "./src/app/signup/signup.component.ts": 
@@ -1233,7 +1269,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("mat-form-field {\r\n  width: 100%;\r\n}\r\n\r\nmat-spinner {\r\n  margin: auto;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9hcHAvc2luZ2luL3Npbmdpbi5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsV0FBVztBQUNiOztBQUVBO0VBQ0UsWUFBWTtBQUNkIiwiZmlsZSI6Ii4uL3NyYy9hcHAvc2luZ2luL3Npbmdpbi5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsibWF0LWZvcm0tZmllbGQge1xyXG4gIHdpZHRoOiAxMDAlO1xyXG59XHJcblxyXG5tYXQtc3Bpbm5lciB7XHJcbiAgbWFyZ2luOiBhdXRvO1xyXG59XHJcbiJdfQ== */");
+            /* harmony default export */ __webpack_exports__["default"] = ("mat-form-field {\r\n  width: 100%;\r\n}\r\n\r\nmat-spinner {\r\n  margin: auto;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2luZ2luL3Npbmdpbi5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsV0FBVztBQUNiOztBQUVBO0VBQ0UsWUFBWTtBQUNkIiwiZmlsZSI6InNyYy9hcHAvc2luZ2luL3Npbmdpbi5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsibWF0LWZvcm0tZmllbGQge1xyXG4gIHdpZHRoOiAxMDAlO1xyXG59XHJcblxyXG5tYXQtc3Bpbm5lciB7XHJcbiAgbWFyZ2luOiBhdXRvO1xyXG59XHJcbiJdfQ== */");
             /***/ 
         }),
         /***/ "./src/app/singin/singin.component.ts": 
