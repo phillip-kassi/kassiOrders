@@ -1095,13 +1095,13 @@
                     this.httpClient = httpClient;
                 }
                 OrderService.prototype.getClientOders = function (id) {
-                    return this.httpClient.get('http://localhost:3001/api/users/' + id + '/orders');
+                    return this.httpClient.get('api/users/' + id + '/orders');
                 };
                 OrderService.prototype.getAllOrders = function () {
-                    return this.httpClient.get('http://localhost:3001/api/orders/');
+                    return this.httpClient.get('api/orders/');
                 };
                 OrderService.prototype.createOrder = function (userID, orderList) {
-                    return this.httpClient.post('http://localhost:3001/api/users/' + userID + '/order', orderList);
+                    return this.httpClient.post('api/users/' + userID + '/order', orderList);
                 };
                 return OrderService;
             }());
@@ -1133,17 +1133,17 @@
                     this.httpClient = httpClient;
                 }
                 ProductService.prototype.createProduct = function (product) {
-                    return this.httpClient.post('http://localhost:3001/api/product', product);
+                    return this.httpClient.post('api/product', product);
                 };
                 ProductService.prototype.getProducts = function (_a) {
                     var page = _a.page, perPage = _a.perPage, filter = _a.filter;
-                    return this.httpClient.get('http://localhost:3001/api/products' + ("?page=" + page + "&perPage=" + perPage + "&filter=" + filter));
+                    return this.httpClient.get('api/products' + ("?page=" + page + "&perPage=" + perPage + "&filter=" + filter));
                 };
                 ProductService.prototype.deleteProduct = function (id) {
-                    return this.httpClient.delete('http://localhost:3001/api/products/' + id);
+                    return this.httpClient.delete('api/products/' + id);
                 };
                 ProductService.prototype.updateProduct = function (id, product) {
-                    return this.httpClient.put('http://localhost:3001/api/products/' + id, product);
+                    return this.httpClient.put('api/products/' + id, product);
                 };
                 return ProductService;
             }());
@@ -1176,19 +1176,19 @@
                 }
                 UserService.prototype.getUsers = function (pageSize, currentPage) {
                     var query = "?pageSize=" + pageSize + "&currentPage=" + currentPage;
-                    return this.httpClient.get('http://localhost:3001/api/users' + query);
+                    return this.httpClient.get('api/users' + query);
                 };
                 UserService.prototype.getUser = function (id) {
                     return this.httpClient.get('users/' + id);
                 };
                 UserService.prototype.deleteUser = function (id) {
-                    return this.httpClient.delete('http://localhost:3001/api/users/' + id);
+                    return this.httpClient.delete('api/users/' + id);
                 };
                 UserService.prototype.createtUser = function (user) {
-                    return this.httpClient.post('http://localhost:3001/api/signup', user);
+                    return this.httpClient.post('api/signup', user);
                 };
                 UserService.prototype.checkUser = function (password, username) {
-                    return this.httpClient.get('http://localhost:3001/api/user/' + username + '/' + password);
+                    return this.httpClient.get('api/user/' + username + '/' + password);
                 };
                 return UserService;
             }());
