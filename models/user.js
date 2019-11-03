@@ -17,7 +17,8 @@ const  userSchema = mongoose.Schema({
   streetname: {type: String, require: false, default: "Street Name Needed"},
   housenumber:{type: String, require: false, default: "House Number Needed"},
   orders:[{type: Schema.Types.ObjectId, ref: 'Order'}],
-  signupdate:{type: Date, require: false, default: Date.now()}
+  signupdate:{type: Date, require: false, default: Date.now()},
+  image: {type: String, require: false, default: 'images/default.jpg'}
 });
 
 userSchema.plugin(deepPopulate,{

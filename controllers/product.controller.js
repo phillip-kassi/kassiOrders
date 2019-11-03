@@ -38,7 +38,6 @@ var filter = req.query.filter;
 
 Prouct.paginate(query, options).then(products => {
     res.json(products);
-    console.log(products);
   }).catch(err => {
     console.log(err);
     res.json({message:'could not retrieve products'});

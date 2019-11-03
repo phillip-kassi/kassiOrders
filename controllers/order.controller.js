@@ -11,7 +11,6 @@ var kassiordersEmail = 'kassiorders@gmail.com';
 exports.createOrder = (req, res) => {
 
   var userID = req.params.id;
-  console.log(req.body.products.split('#'));
   //split the concatinated('#') string of IDs(products)
   var productIDs  = req.body.products.split('#');
 
@@ -23,7 +22,11 @@ exports.createOrder = (req, res) => {
     //if the order created successfully
     if(order)
     {
+
       User.findById(userID).then(user =>{
+        Order.findByIdAndUpdate(order._id, {$set: {username: user.username}}, {new : true, useFindAndModify : true}).then(order =>{
+
+        })
        user.orders.push(order._id);
        user.save().then(user =>{
 
@@ -59,7 +62,7 @@ exports.createOrder = (req, res) => {
             console.log(err);
           } else
           {
-            console.log(info);
+
           }
         })
 
@@ -122,10 +125,9 @@ exports.getOrder = (req, res) =>
 }
 
 exports.getUserOrders = (req, res) => {
-  console.log('eish eish')
+
   User.findById(req.params.id).deepPopulate('orders, orders.products').then(data => {
     res.json(data);
-    console.log(data);
   }).catch(err => {
     console.log(err);
     res.json({message:'could not get/find orders made by users'})

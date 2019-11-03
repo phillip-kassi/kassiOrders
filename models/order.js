@@ -7,7 +7,8 @@ var orderSchema = mongoose.Schema({
 
   products : [{type: Schema.Types.ObjectId, ref: 'Product'}],
   totalprice: {type: String, require: true},
-  orderdate: {type: Date, require: false, default: Date.now()}
+  orderdate: {type: Date, require: false, default: Date.now()},
+  username: {type: String}
 
 });
 
