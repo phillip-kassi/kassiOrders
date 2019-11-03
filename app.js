@@ -8,7 +8,7 @@ var path = require('path');
 var User = require('./models/user');
 var multer = require('multer');
 
-//when i'm conneting to remote database
+//when i'm conneting to a remote database
 mongoose.connect('mongodb://admin:admin1234%2A%2A@cluster0-shard-00-00-xbnnw.mongodb.net:27017,cluster0-shard-00-01-xbnnw.mongodb.net:27017,cluster0-shard-00-02-xbnnw.mongodb.net:27017/kassApp?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority', { useNewUrlParser: true , useUnifiedTopology: true }).then(() =>{
   console.log('connected to database 4');
 })
@@ -29,10 +29,10 @@ var app = express();
 app.use(cors());
 app.use(bodyparser.json());
 app.use('/api', router);
-// app.use(express.static(path.join(__dirname, "public")));
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, "public/index.html"));
-// })
+app.use(express.static(path.join(__dirname, "public")));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"));
+})
 app.use(pdf);
 
 //allow access to the images folder
@@ -53,7 +53,7 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage })
 
-
+//come on dfgfddg
 
 app.post("/api/update/:id", multer({storage: storage}).single("image"),(req, res) =>
 {
@@ -61,5 +61,5 @@ app.post("/api/update/:id", multer({storage: storage}).single("image"),(req, res
   let id = req.params.id;
   User.findByIdAndUpdate(id,{$set: {image: url + "/images/" + req.file.filename}}).exec();
  })
-
+//
 module.exports = app;
