@@ -18,25 +18,26 @@ mongoose.connect('mongodb://admin:admin1234%2A%2A@cluster0-shard-00-00-xbnnw.mon
 
 
 //trying to mamke changes
-// mongoose.connect('mongodb://localhost:27017/Kassi', { useNewUrlParser: true, useUnifiedTopology: true }).then(() =>{
-//   console.log('connected to database');
-// })
-// .catch(() => {
-//   console.log('could not connect to database :(');
-// });
+mongoose.connect('mongodb://localhost:27017/Kassi', { useNewUrlParser: true, useUnifiedTopology: true }).then(() =>{
+  console.log('connected to database');
+})
+.catch(() => {
+  console.log('could not connect to database :(');
+});
 var app = express();
 
 app.use(cors());
 app.use(bodyparser.json());
 app.use('/api', router);
+app.use("/images", express.static("images"));
 app.use(express.static(path.join(__dirname, "public")));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, "public/index.html"));
-})
+});
 app.use(pdf);
 
 //allow access to the images folder
-app.use("/images", express.static(path.join(__dirname, "images")));
+
 
 //nodebackend\images
 
@@ -51,7 +52,7 @@ var storage = multer.diskStorage({
 
 })
 
-var upload = multer({ storage: storage })
+var upload = multer({ storage: storage });
 
 //come on dfgfddg
 
@@ -59,7 +60,9 @@ app.post("/api/update/:id", multer({storage: storage}).single("image"),(req, res
 {
   let url = req.protocol + "://" + req.get('host');
   let id = req.params.id;
-  User.findByIdAndUpdate(id,{$set: {image: url + "/images/" + req.file.filename}}).exec();
+  User.findByIdAndUpdate(id,{$set: {image: url + '/images/' + req.file.filename}}).exec().then( image => {
+    console.log(image)
+  });
  })
 //
 module.exports = app;

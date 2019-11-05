@@ -18,7 +18,7 @@ const  userSchema = mongoose.Schema({
   housenumber:{type: String, require: false, default: "House Number Needed"},
   orders:[{type: Schema.Types.ObjectId, ref: 'Order'}],
   signupdate:{type: Date, require: false, default: Date.now()},
-  image: {type: String, require: false, default: 'images/default.jpg'}
+  image: {type: String, require: false, default: 'https://kassi-orders.herokuapp.com/images/default.jpg'}
 });
 
 userSchema.plugin(deepPopulate,{
