@@ -1093,11 +1093,12 @@ let OrderComponent = class OrderComponent {
         let quantity = 1;
         quantity = form.value;
         this.productsList.push(productID.trim());
-        console.log(this.productsList);
         this.products.forEach(element => {
-            this.productList2.push(element);
-            this.viewList = true;
-            this.total += element.price * quantity;
+            if (element._id === productID) {
+                this.productList2.push(element);
+                this.viewList = true;
+                this.total += element.price * quantity;
+            }
         });
         this.quantity = quantity;
     }

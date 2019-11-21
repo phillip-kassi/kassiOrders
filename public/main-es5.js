@@ -1082,11 +1082,12 @@
                     var quantity = 1;
                     quantity = form.value;
                     this.productsList.push(productID.trim());
-                    console.log(this.productsList);
                     this.products.forEach(function (element) {
-                        _this.productList2.push(element);
-                        _this.viewList = true;
-                        _this.total += element.price * quantity;
+                        if (element._id === productID) {
+                            _this.productList2.push(element);
+                            _this.viewList = true;
+                            _this.total += element.price * quantity;
+                        }
                     });
                     this.quantity = quantity;
                 };
