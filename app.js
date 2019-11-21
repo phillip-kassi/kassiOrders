@@ -9,12 +9,12 @@ var User = require('./models/user');
 var multer = require('multer');
 
 //when i'm conneting to a remote database
-mongoose.connect('mongodb://admin:admin1234%2A%2A@cluster0-shard-00-00-xbnnw.mongodb.net:27017,cluster0-shard-00-01-xbnnw.mongodb.net:27017,cluster0-shard-00-02-xbnnw.mongodb.net:27017/kassApp?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority', { useNewUrlParser: true , useUnifiedTopology: true }).then(() =>{
-  console.log('connected to database 4');
-})
-.catch(() => {
-  console.log('could not connect to database :(');
-});
+// mongoose.connect('mongodb://admin:admin1234%2A%2A@cluster0-shard-00-00-xbnnw.mongodb.net:27017,cluster0-shard-00-01-xbnnw.mongodb.net:27017,cluster0-shard-00-02-xbnnw.mongodb.net:27017/kassApp?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority', { useNewUrlParser: true , useUnifiedTopology: true }).then(() =>{
+//   console.log('connected to database 4');
+// })
+// .catch(() => {
+//   console.log('could not connect to database :(');
+// });
 
 
 //trying to mamke changes
@@ -35,7 +35,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, "public/index.html"));
 });
 app.use(pdf);
-
 //allow access to the images folder
 
 

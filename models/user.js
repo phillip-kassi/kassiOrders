@@ -18,6 +18,7 @@ const  userSchema = mongoose.Schema({
   housenumber:{type: String, require: false, default: "House Number Needed"},
   orders:[{type: Schema.Types.ObjectId, ref: 'Order'}],
   signupdate:{type: Date, require: false, default: Date.now()},
+  role:{type:String, require: false, default:"normal"},
   image: {type: String, require: false, default: 'https://kassi-orders.herokuapp.com/images/default.jpg'}
 });
 

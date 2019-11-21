@@ -68,7 +68,6 @@ exports.createUser = (req, res) =>
 
   }
 
-
   exports.getValidUser = (req, res) =>
   {
     var password = req.params.password;
@@ -96,5 +95,15 @@ exports.createUser = (req, res) =>
     User.findByIdAndUpdate(id, {$set: {username: user.username, cellnumber: user.cellnumber,housenumber: user.housenumber, streetname: user.streetname, email: user.email}}, {new : true, useFindAndModify : true}).then(user => {
       res.json({username: user.username, email: user.email});
     }).catch(err => {res.json({message: 'could not update'})});
+  },
+
+  exports.updateRole = (req, res) => {
+    let role = req.body.role;
+    let id = req.params.id;
+
+    User.findByIdAndUpdate(id, {$set: {role:role}}, {new : true, useFindAndModify : true}).then(user => {
+      res.json({role});
+    }).catch(err => {res.json({message: 'could not update Role'})});
   }
+
 

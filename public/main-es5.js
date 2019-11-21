@@ -39,7 +39,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("\n\n\n<div class=\"\">\n<br>\n  <div class=\"row\">\n\n\n      <div class=\"col-sm-2\">\n        <br>\n        <ul>\n            <button (click)=\"getUsers()\" mat-icon-button><mat-icon color='primary'>emoji_people</mat-icon></button>\n            <br>\n            <br>\n            <button (click)=\"viewAllMessages()\" mat-icon-button><mat-icon color='primary'>messages</mat-icon></button>\n            <br>\n            <br>\n            <button (click)=\"viewAllOrders()\" mat-icon-button><mat-icon color='primary'>add_alert</mat-icon></button>\n            <br>\n            <br>\n            <button (click)=\"addProduct2()\" mat-icon-button><mat-icon color='primary'>add_shopping_cart</mat-icon></button>\n            <br>\n            <br>\n          </ul>\n     </div>\n     <div class=\"col-md-8\" *ngIf=\"!isViewAllOrders && !viewOrders\">\n        <mat-accordion *ngFor=\"let user of Users\">\n            <hr>\n            <mat-expansion-panel>\n\n             <mat-expansion-panel-header color=\"primary\">\n               <table class=\"table\">\n                 <tr>\n                   <div class=\"container\">\n\n                      <td>  <span style=\"text-transform: capitalize;\"><br><span class=\"text-primary uk-text-uppercase\">{{user.username}}</span></span></td>\n                      <td *ngIf=\"user.orders.length !== 0\"><br><i class=\"material-icons\" id=\"add_alert\">add_alert</i><span class=\"text-danger\"></span></td>\n                   </div>\n\n                 </tr>\n               </table>\n\n            </mat-expansion-panel-header>\n\n              <table class=\"table\">\n                <thead>\n                  <th>Email </th>\n                  <th>Cell Number</th>\n                  <th>Date Registered</th>\n                  <th>View Order/s</th>\n                </thead>\n                <tbody>\n                  <tr>\n                    <td>{{user.email}}</td>\n                    <td>{{user.cellnumber}}</td>\n                    <td><span style=\"text-transform: uppercase;\">{{user.signupdate.split('T')[0]}}</span></td>\n                    <td></td>\n                  </tr>\n                </tbody>\n              </table>\n              <mat-action-row>\n                  <button mat-button color='accent' (click)=\"deleteUser(user._id)\" >Delete User</button>\n                 <button mat-button color='primary' (click)=\"viewUserOrders(user._id)\" [disabled] = 'user.orders.length === 0'>View Order</button>\n              </mat-action-row>\n            </mat-expansion-panel>\n        </mat-accordion>\n        <br>\n        <mat-paginator  #paginator  [length]='recordsLength' [pageSize] = usersPerPage [pageSizeOptions]='pageSizeOptions' (page)='onChangedPage($event)'></mat-paginator>\n    </div>\n\n\n    <!--Add the orders panel-->\n    <div class=\"col-md-8\" *ngIf=\"isViewAllOrders && isAddNewProduct !== true\">\n        <table class=\"table mat-table\">\n          <thead>\n            <th align=\"center\">Order By</th>\n            <th align=\"center\">Order Time</th>\n            <th align=\"center\">Total in Rands</th>\n            <th align=\"center\">No. Of Products Ordered</th>\n            <th align=\"center\">Accept/Reject Order</th>\n          </thead>\n          <tbody>\n            <tr *ngFor=\"let order of allOrders\">\n              <td *ngIf=\"order.products.length !== 0\">{{order.username}}</td>\n              <td align=\"center\"  *ngIf=\"order.products.length !== 0\">{{order.orderdate.split('T')[1].split('.')[0]}}</td>\n              <td align=\"center\"  *ngIf=\"order.products.length !== 0\">{{order.totalprice}}</td>\n              <td align=\"center\"  *ngIf=\"order.products.length !== 0\">{{order.products.length}}</td>\n              <td align=\"center\"  *ngIf=\"order.products.length !== 0\">\n                <div class=\"row\">\n                  <div class=\"col-md-6\"><button class=\"btn btn-outline-success\">Accept</button></div>\n                  <div class=\"col-md-6\"><button class=\"btn btn-outline-danger\" (click)=\"deleteOrder(order._id)\">Reject</button></div>\n                </div>\n            </td>\n            </tr>\n          </tbody>\n\n        </table>\n\n\n    </div>\n\n    <div class=\"col-md-8\" *ngIf=\"viewOrders\">\n        <h2 class=\"text-center text-primary\" mat-text>ORDER DETAILS - <span style=\"text-transform: uppercase;\"> {{oneOrder.username}}</span></h2>\n        <br>\n        <mat-card>\n            <table class=\"table table-hover\">\n                <thead>\n                  <th>Order Time</th>\n                  <th>Total Items</th>\n                  <th>Total Price</th>\n                  <th>Producs</th>\n                </thead>\n                <tbody>\n                  <tr *ngFor=\"let item of oneOrder.orders\">\n                    <td>{{item.orderdate.split('T')[1].split('.')[0]}}</td>\n                    <td>{{item.products.length}}</td>\n                    <td>R{{item.totalprice}}</td>\n                    <td *ngFor=\"let prod of item.products\">\n                    {{prod.name}} @ R{{prod.price}} Each\n                    </td>\n                  </tr>\n                </tbody>\n              </table>\n        </mat-card>\n\n        <hr>\n    </div>\n\n    <div class=\"col-md-8\" *ngIf=\"isAddNewProduct\">\n        <mat-card>\n      <table class=\"table table-striped\">\n        <thead>\n          <th>Product Name</th>\n          <th>Unit Price</th>\n          <th>Edit/Delete</th>\n        </thead>\n        <tbody>\n          <tr *ngFor=\"let product of products\">\n            <td>{{product.name}}</td>\n            <td>R{{product.price}}</td>\n            <td>\n              <div class=\"row\">\n                <div class=\"col-md-6\"><button mat-button color=\"accent\" (click)=\"deleteProduct(product._id)\">REMOVE</button></div>\n                <div class=\"col-md-6\"><button mat-button color=\"primary\" (click)=\"editProduct(product._id)\">EDIT</button></div>\n              </div>\n            </td>\n          </tr>\n        </tbody>\n      </table>\n      <mat-paginator [length]='products.length' pageSize = 5 [showFirstLastButtons] = \"true\" [pageSizeOptions]='[2, 4, 6, 8, 10]'></mat-paginator>\n      <br>\n      <br>\n    </mat-card>\n       <mat-card>\n            <form (submit) = \"addProduct(addProductForm)\" #addProductForm='ngForm'>\n\n              <mat-form-field>\n                <input matInput type=\"text\" required [(ngModel)]=\"name\" name=\"name\" placeholder=\"Product Name\" #nameInput>\n                <mat-error *ngIf=\"nameInput.invalid\"></mat-error>\n              </mat-form-field>\n\n              <br>\n\n            <mat-form-field>\n              <input matInput type=\"number\" name=\"price\" placeholder=\"Price\" [(ngModel)]=\"price\" #priceInput='ngModel' required>\n              <mat-error *ngIf=\"priceInput.invalid\">Please enter Price</mat-error>\n            </mat-form-field>\n\n            <div>\n                <button class=\"btn btn-outline-primary\" color='blue' visible='false' [disabled] = 'addProductForm.invalid' type=\"submit\">{{btnEditRemove}}</button>\n            </div>\n\n            </form>\n          </mat-card>\n    </div>\n\n  </div>\n</div>\n\n\n\n\n  <!-- <h1 class=\"h1\">Welcome To Dashboard</h1>\n\n  <mat-card>\n    <table class=\"table\">\n      <thead>\n      <th>\n          Username\n     </th>\n     <th>\n          Email\n     </th>\n      <th>\n          Cell Number\n      </th>\n      </thead>\n      <tbody>\n        <tr *ngFor=\"let user of Users\">\n          <td>\n            {{user.username}}\n          </td>\n          <td>\n            {{user.email}}\n          </td>\n          <td>\n            {{user.cellnumber}}\n          </td>\n        </tr>\n      </tbody>\n    </table>\n\n  </mat-card>\n -->\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("\n\n\n<div class=\"\">\n<br>\n  <div class=\"row\">\n\n\n      <div class=\"col-sm-2\">\n        <br>\n        <ul>\n            <button (click)=\"getUsers()\" mat-icon-button><mat-icon color='primary'>emoji_people</mat-icon></button>\n            <br>\n            <br>\n            <button (click)=\"viewAllMessages()\" mat-icon-button><mat-icon color='primary'>messages</mat-icon></button>\n            <br>\n            <br>\n            <button (click)=\"viewAllOrders()\" mat-icon-button><mat-icon color='primary'>add_alert</mat-icon></button>\n            <br>\n            <br>\n            <button (click)=\"addProduct2()\" mat-icon-button><mat-icon color='primary'>add_shopping_cart</mat-icon></button>\n            <br>\n            <br>\n          </ul>\n     </div>\n     <div class=\"col-md-8\" *ngIf=\"!isViewAllOrders && !viewOrders && isViewAllMessages !== true\">\n        <mat-accordion *ngFor=\"let user of Users\">\n            <hr>\n            <mat-expansion-panel>\n\n             <mat-expansion-panel-header color=\"primary\">\n               <table class=\"table\">\n                 <tr>\n                   <div class=\"container\">\n\n                      <td>  <span style=\"text-transform: capitalize;\"><br><span class=\"text-primary uk-text-uppercase\">{{user.username}}</span></span></td>\n                      <td *ngIf=\"user.orders.length !== 0\"><br><i class=\"material-icons\" id=\"add_alert\">add_alert</i><span class=\"text-danger\"></span></td>\n                   </div>\n\n                 </tr>\n               </table>\n\n            </mat-expansion-panel-header>\n\n              <table class=\"table\">\n                <thead>\n                  <th>Email </th>\n                  <th>Cell Number</th>\n                  <th>Date Registered</th>\n                  <th>Role</th>\n                </thead>\n                <tbody>\n                  <tr>\n                    <td>{{user.email}}</td>\n                    <td>{{user.cellnumber}}</td>\n                    <td><span style=\"text-transform: uppercase;\">{{user.signupdate.split('T')[0]}}</span></td>\n                    <td>\n                      <mat-select value = {{user.role}} #selectetedRole id='user._id'>\n                        <mat-option value= \"admin\" >admin</mat-option>\n                        <mat-option value=\"normal\">normal</mat-option>\n                      </mat-select>\n                    </td>\n                  </tr>\n                </tbody>\n              </table>\n              <mat-action-row>\n                  <button mat-raised-button color='accent' [hidden] ='user.role === \"admin\"'   (click)=\"deleteUser(user._id)\" >Delete User</button>\n                 <button mat-raised-button color='primary' [hidden]='user.role === \"admin\"' (click)=\"viewUserOrders(user._id)\" [disabled] = 'user.orders.length === 0'>View Order</button>\n                 <button mat-raised-button color='secondary' [disabled]='user.role === \"admin\"'  (click)=\"saveUserRole(user._id, selectetedRole)\">Save Role</button>\n\n                </mat-action-row>\n            </mat-expansion-panel>\n\n        </mat-accordion>\n        <br>\n        <div class=\"alert-success\"  *ngIf=\"editRole\">\n          User Role has been Changed Successfully\n        </div>\n        <mat-paginator  #paginator  [length]='recordsLength' [pageSize] = usersPerPage [pageSizeOptions]='pageSizeOptions' (page)='onChangedPage($event)'></mat-paginator>\n\n      </div>\n\n\n    <!--Add the orders panel-->\n    <div class=\"col-md-8\" *ngIf=\"isViewAllOrders && isAddNewProduct !== true\">\n        <table class=\"table mat-table\">\n          <thead>\n            <th align=\"center\">Order By</th>\n            <th align=\"center\">Order Time</th>\n            <th align=\"center\">Total in Rands</th>\n            <th align=\"center\">No. Of Products Ordered</th>\n            <th align=\"center\">Accept/Reject Order</th>\n          </thead>\n          <tbody>\n            <tr *ngFor=\"let order of allOrders\">\n              <td *ngIf=\"order.products.length !== 0\">{{order.username}}</td>\n              <td align=\"center\"  *ngIf=\"order.products.length !== 0\">{{order.orderdate.split('T')[1].split('.')[0]}}</td>\n              <td align=\"center\"  *ngIf=\"order.products.length !== 0\">{{order.totalprice}}</td>\n              <td align=\"center\"  *ngIf=\"order.products.length !== 0\">{{order.products.length}}</td>\n              <td align=\"center\"  *ngIf=\"order.products.length !== 0\">\n                <div class=\"row\">\n                  <div class=\"col-md-6\"><button class=\"btn btn-outline-success\">Accept</button></div>\n                  <div class=\"col-md-6\"><button class=\"btn btn-outline-danger\" (click)=\"deleteOrder(order._id)\">Reject</button></div>\n                </div>\n            </td>\n            </tr>\n          </tbody>\n\n        </table>\n\n\n    </div>\n\n    <div class=\"col-md-8\" *ngIf=\"viewOrders\">\n        <h2 class=\"text-center text-primary\" mat-text>ORDER DETAILS - <span style=\"text-transform: uppercase;\"> {{oneOrder.username}}</span></h2>\n        <br>\n        <mat-card>\n            <table class=\"table table-hover\">\n                <thead>\n                  <th>Order Time</th>\n                  <th>Total Items</th>\n                  <th>Total Price</th>\n                  <th>Producs</th>\n                </thead>\n                <tbody>\n                  <tr *ngFor=\"let item of oneOrder.orders\">\n                    <td>{{item.orderdate.split('T')[1].split('.')[0]}}</td>\n                    <td>{{item.products.length}}</td>\n                    <td>R{{item.totalprice}}</td>\n                    <td *ngFor=\"let prod of item.products\">\n                    {{prod.name}} @ R{{prod.price}} Each\n                    </td>\n                  </tr>\n                </tbody>\n              </table>\n        </mat-card>\n\n        <hr>\n    </div>\n\n    <div class=\"col-md-8\" *ngIf=\"isAddNewProduct\">\n        <mat-card>\n      <table class=\"table table-striped\">\n        <thead>\n          <th>Product Name</th>\n          <th>Unit Price</th>\n          <th>Edit/Delete</th>\n        </thead>\n        <tbody>\n          <tr *ngFor=\"let product of products\">\n            <td>{{product.name}}</td>\n            <td>R{{product.price}}</td>\n            <td>\n              <div class=\"row\">\n                <div class=\"col-md-6\"><button mat-button color=\"accent\" (click)=\"deleteProduct(product._id)\">REMOVE</button></div>\n                <div class=\"col-md-6\"><button mat-button color=\"primary\" (click)=\"editProduct(product._id)\">EDIT</button></div>\n              </div>\n            </td>\n          </tr>\n        </tbody>\n      </table>\n      <mat-paginator [length]='products.length' pageSize = 5 [showFirstLastButtons] = \"true\" [pageSizeOptions]='[2, 4, 6, 8, 10]'></mat-paginator>\n      <br>\n      <br>\n    </mat-card>\n       <mat-card>\n            <form (submit) = \"addProduct(addProductForm)\" #addProductForm='ngForm'>\n\n              <mat-form-field>\n                <input matInput type=\"text\" required [(ngModel)]=\"name\" name=\"name\" placeholder=\"Product Name\" #nameInput>\n                <mat-error *ngIf=\"nameInput.invalid\"></mat-error>\n              </mat-form-field>\n\n              <br>\n\n            <mat-form-field>\n              <input matInput type=\"number\" name=\"price\" placeholder=\"Price\" [(ngModel)]=\"price\" #priceInput='ngModel' required>\n              <mat-error *ngIf=\"priceInput.invalid\">Please enter Price</mat-error>\n            </mat-form-field>\n\n            <div>\n                <button class=\"btn btn-outline-primary\" color='blue' visible='false' [disabled] = 'addProductForm.invalid' type=\"submit\">{{btnEditRemove}}</button>\n            </div>\n\n            </form>\n          </mat-card>\n    </div>\n    <div class=\"col-md-8\" *ngIf=\"isViewAllMessages\">\n\n      <mat-accordion *ngFor=\"let msg of messages\">\n          <hr>\n          <mat-expansion-panel>\n            <mat-expansion-panel-header>\n              <span style=\"color: palevioletred; font-size: medium;\">Message From</span> : &nbsp; {{msg.user.username}} &nbsp; : &nbsp;\n              <span style=\"color: palevioletred; font-size: medium;\">Time Sent & Date</span> : &nbsp; {{msg.date.split('T')[0]}} &nbsp; {{msg.date.split('T')[1].split('.')[0]}} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;\n              <span style=\"color: palevioletred; font-size: medium;\">Subject</span> : &nbsp; {{msg.subject}}\n            </mat-expansion-panel-header>\n\n            <table class=\"table table-borderless\">\n              <thead>\n                <th>\n                    <span style=\"font-size: large;\">Message</span>\n                </th>\n              </thead>\n                <tbody>\n                  <tr>\n                   <td><span style=\"font-size: medium;\">{{msg.message}}</span> </td>\n                  </tr>\n                </tbody>\n                <thead>\n                    <th>\n                    <span style=\"font-size: large;\">Reply</span>\n                    </th>\n                </thead>\n                <tbody>\n                  <tr>\n                    <td>\n                      <form>\n                        <mat-form-field *ngIf=\"msg.read !== true\">\n                            <textarea  matInput cols=\"49\" rows=\"8\" [(ngModel)]=\"messageReply\" name=\"messageReply\"></textarea>\n                        </mat-form-field>\n                        <mat-form-field *ngIf=\"msg.read === true\">\n                            <textarea  [disabled] = 'msg.read === true' [placeholder]=\"msg.adminmsg\" matInput cols=\"49\" rows=\"8\" [(ngModel)]=\"messageReply\" name=\"messageReply\"></textarea>\n                        </mat-form-field>\n                        <br>\n                        <table>\n                          <tr>\n                            <td>\n                                <button [disabled] = 'msg.read === true'  mat-raised-button color='primary' (click)='replyMessage(msg._id)'>SEND</button>\n\n                            </td>\n                            <td>\n                                <button [disabled] = 'msg.read !== true'  mat-raised-button color='accent' (click)='replyMessage(msg._id)'>DELETE</button>\n\n                            </td>\n                          </tr>\n                        </table>\n                      </form>\n                    </td>\n                  </tr>\n                </tbody>\n            </table>\n          </mat-expansion-panel>\n      </mat-accordion>\n      <div class=\"alert-info\" *ngIf=\"isReply\">\n        A reply has been Sent!\n      </div>\n   </div>\n  </div>\n\n</div>\n\n\n\n\n  <!-- <h1 class=\"h1\">Welcome To Dashboard</h1>\n\n  <mat-card>\n    <table class=\"table\">\n      <thead>\n      <th>\n          Username\n     </th>\n     <th>\n          Email\n     </th>\n      <th>\n          Cell Number\n      </th>\n      </thead>\n      <tbody>\n        <tr *ngFor=\"let user of Users\">\n          <td>\n            {{user.username}}\n          </td>\n          <td>\n            {{user.email}}\n          </td>\n          <td>\n            {{user.cellnumber}}\n          </td>\n        </tr>\n      </tbody>\n    </table>\n\n  </mat-card>\n -->\n");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/footer/footer.component.html": 
@@ -61,7 +61,18 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<!-- <header style=\"position: static;\">\n\n  <nav class=\"navbar navbar-expand-md navbar-dark bg-dark\">\n    <div><a class=\"navbar-brand\" href=\"\">KassiApp</a></div>\n\n\n  <ul class=\"navbar-nav navbar-collapse justify-content-end\">\n    <li class=\"nav-link\"><a class=\"text-light\" [routerLink]=\"['/home/dashboard']\" routerLinkActive=\"router-link-active\" >Dashboard</a></li>\n    <li class=\"nav-link\"><a class=\"text-light\">Sign Out</a></li>\n  </ul>\n  <form class=\"form-inline my-2 my-lg-0\">\n    <input class=\"form-control mr-sm-2\" type=\"search\" placeholder=\"Search Shop...\" name=\"search\" aria-label=\"Search\">\n    <button class=\"btn btn-outline-success my-2 my-sm-0\" routerLinkActive=\"router-link-active\">Search</button>\n  </form>\n\n\n\n\n</nav>\n</header> -->\n\n<div class=\"row\">\n\n    <mat-toolbar color='primary'>\n\n      <span><a [routerLink]=\"['/']\" >Kassi Order</a></span>\n      <ul>\n          <li>\n             <a mat-button [routerLink]=\"['/profile']\" routerLinkActive=\"mat-accent\">Profile</a>\n          </li>\n        </ul>\n        <ul>\n            <li>\n               <a mat-button [routerLink]=\"['/order']\">Order</a>\n            </li>\n          </ul>\n      <span class=\"spacer\"></span>\n      <ul>\n          <li>\n             <a mat-button [routerLink]=\"['/signup']\" routerLinkActive=\"mat-accent\">Sign Up</a>\n          </li>\n        </ul>\n      <ul>\n       <li>\n          <a mat-button [routerLink]=\"['/dashboard']\" routerLinkActive=\"mat-accent\" >Dashboard</a>\n       </li>\n     </ul>\n     <ul>\n        <li>\n           <a mat-button [routerLink]=\"['/signin']\" routerLinkActive=\"mat-accent\">Sign in</a>\n        </li>\n      </ul>\n      <ul>\n          <li>\n             <a mat-button [routerLink]=\"['/home']\" >Sign Out</a>\n          </li>\n        </ul>\n    </mat-toolbar>\n\n</div>\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("<!-- <header style=\"position: static;\">\n\n  <nav class=\"navbar navbar-expand-md navbar-dark bg-dark\">\n    <div><a class=\"navbar-brand\" href=\"\">KassiApp</a></div>\n\n\n  <ul class=\"navbar-nav navbar-collapse justify-content-end\">\n    <li class=\"nav-link\"><a class=\"text-light\" [routerLink]=\"['/home/dashboard']\" routerLinkActive=\"router-link-active\" >Dashboard</a></li>\n    <li class=\"nav-link\"><a class=\"text-light\">Sign Out</a></li>\n  </ul>\n  <form class=\"form-inline my-2 my-lg-0\">\n    <input class=\"form-control mr-sm-2\" type=\"search\" placeholder=\"Search Shop...\" name=\"search\" aria-label=\"Search\">\n    <button class=\"btn btn-outline-success my-2 my-sm-0\" routerLinkActive=\"router-link-active\">Search</button>\n  </form>\n\n\n\n\n</nav>\n</header> -->\n\n<div class=\"row\">\n\n    <mat-toolbar color='primary'>\n\n      <span><a [routerLink]=\"['/']\" >Kassi Order</a></span>\n      <ul>\n          <li>\n             <a  *ngIf=\"userService.isUserLoggedIn()\" mat-button [routerLink]=\"['/profile']\" routerLinkActive=\"mat-accent\">Profile</a>\n          </li>\n        </ul>\n        <ul>\n            <li *ngIf=\"userService.isUserLoggedIn()\">\n               <a mat-button [routerLink]=\"['/order']\">Order</a>\n            </li>\n          </ul>\n      <span class=\"spacer\"></span>\n      <ul>\n          <li>\n             <a *ngIf=\"!userService.isUserLoggedIn()\" mat-button [routerLink]=\"['/signup']\" routerLinkActive=\"mat-accent\">Sign Up</a>\n          </li>\n        </ul>\n      <ul>\n       <li>\n          <a *ngIf=\"userService.isUserLoggedIn() && userService.isUserAdmin()\" mat-button [routerLink]=\"['/dashboard']\" routerLinkActive=\"mat-accent\" >Dashboard</a>\n       </li>\n     </ul>\n     <ul>\n        <li>\n           <a  *ngIf=\"!userService.isUserLoggedIn()\" mat-button [routerLink]=\"['/signin']\" routerLinkActive=\"mat-accent\">Sign in</a>\n        </li>\n      </ul>\n      <ul>\n          <li>\n             <a  *ngIf=\"userService.isUserLoggedIn()\" mat-button (click)=\"signOut()\" >Sign Out</a>\n          </li>\n        </ul>\n    </mat-toolbar>\n\n</div>\n");
+            /***/ 
+        }),
+        /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/message/message.component.html": 
+        /*!**************************************************************************************!*\
+          !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/message/message.component.html ***!
+          \**************************************************************************************/
+        /*! exports provided: default */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony default export */ __webpack_exports__["default"] = ("<br>\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-6\">\n        <h1>Contact Admin</h1>\n        <br>\n          <mat-form-field >\n              <input placeholder=\"Subject\" matInput type=\"text\" [(ngModel)]=\"subject\" name=\"subject\">\n          </mat-form-field>\n            <br>\n          <mat-form-field>\n              <textarea placeholder=\"Enter message here\" matInput col=\"30\" rows=\"10\" [(ngModel)]=\"message\" name=\"message\"></textarea>\n          </mat-form-field>\n            <br>\n              <button mat-raised-button color='primary' (click)=\"sendMessage()\">Send</button><br> <br>\n              <!-- <button class=\"btn btn-block\" (click)=\"getMyMessages()\">Refresh</button> -->\n            <br>\n\n            <div class=\"alert-success\" *ngIf=\"msgSuccess\">\n              Your Message has been sent to Admin.\n            </div>\n\n    </div>\n    <div class=\"col-md-6\">\n        <h1>My Messages</h1>\n        <br>\n\n        <mat-accordion *ngFor=\"let msg of messages\">\n          <hr>\n          <mat-expansion-panel *ngIf=\"msg.user._id === userId\">\n            <mat-expansion-panel-header>\n        <span style=\"color:palevioletred;\">SENT</span>      : {{msg.date.split('T')[0]}} &nbsp; &nbsp;\n\n        <span style=\"color:palevioletred;\">SUBJECT</span>      : {{msg.subject}}\n              <!-- <span style=\"text-transform: uppercase;\">{{msg.subject}}</span> -->\n            </mat-expansion-panel-header>\n            <table class=\"table table-borderless\">\n\n              <thead>\n                <th>You</th>\n              </thead>\n                <tbody>\n                    <tr>\n                        <td>{{msg.message}}</td>\n                    </tr>\n                </tbody>\n              <thead>\n                <th>Admin</th>\n              </thead>\n              <tbody>\n                <tr>\n                      <td>{{msg.adminmsg}}</td>\n                </tr>\n                <br>\n                <tr>\n                    <button mat-raised-button color='accent' (click)='deleteConvo(msg._id)'>DELETE</button>\n                </tr>\n              </tbody>\n            </table>\n          </mat-expansion-panel>\n        </mat-accordion>\n        <br>\n        <div class=\"alert-warning\" *ngIf=\"isDeleted\">\n          Message Deleted.\n        </div>\n   </div>\n  </div>\n\n</div>\n");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/order/order.component.html": 
@@ -72,7 +83,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("\n<div class=\"container-fluid\">\n    <br>\n    <mat-progress-bar\n      mode=\"buffer\"\n      *ngIf=\"isLoading\">\n    </mat-progress-bar>\n    <h1 class=\"display-4\" >Shop Here <mat-icon color='primary'>add_shopping_cart</mat-icon></h1>\n    <br>\n    <br>\n    <mat-form-field  color='primary'>\n    <input placeholder=\"search for product here\" matInput (keyup) = \"filterText($event.target.value)\">\n    </mat-form-field>\n    <mat-card>\n    <div class=\"row\">\n      <div class=\"col-md-7\">\n        <table  class=\"table table-light\">\n          <thead>\n            <th>Name</th>\n            <th>Price</th>\n            <th>Quantity</th>\n            <th>Add To List</th>\n            <th>Remove From List</th>\n          </thead>\n          <tbody>\n            <tr *ngFor=\"let product of products\">\n              <td>{{product.name}}</td>\n              <td>R{{product.price}}</td>\n              <td>\n                <!--  <mat-slider aria-label=\"Quantity\" min = '1' max = '20' step = '2' thumbLabel tickInterval=\"1\" invert ></mat-slider> -->\n                <mat-select placeholder = 'Quantity' #selectetedItem id='product._id'>\n                  <mat-option value= 1 >1</mat-option>\n                  <mat-option value=\"2\">2</mat-option>\n                  <mat-option value=\"6\">6</mat-option>\n                  <mat-option value=\"8\">8</mat-option>\n                  <mat-option value=\"10\">10</mat-option>\n                  <mat-option value=\"15\">15</mat-option>\n                  <mat-option value=\"20\">20</mat-option>\n                </mat-select>\n              </td>\n              <td><button mat-raised-button color='primary'[disabled] = '!selectetedItem.selected' (click)=\"addTolist(selectetedItem, product._id)\">ADD</button></td>\n              <td><button mat-raised-button color='warn' [disabled] = '!selectetedItem.selected' (click)=\"removeFromlist(selectetedItem, product._id)\">REMOVE</button></td>\n            </tr>\n          </tbody>\n        </table>\n        <!-- Paginator component -->\n        <mat-paginator pageIndex = '0' #paginator [length]='docsTotal' pageSize = 4 [showFirstLastButtons] = \"true\" [pageSizeOptions]='[2, 4, 6, 8, 10]'></mat-paginator>\n\n      </div>\n\n      <div class=\"col-md-1\">\n\n      </div>\n      <div class=\"col-sm-3\" *ngIf=\"viewList\">\n        <h3>Total Due: R{{total}}</h3> <br> <button mat-raised-button color='accent' [disabled] = \"isMessage\" (click)=\"placeOrder()\">ORDER</button>\n\n    <mat-list>\n      <mat-list-item *ngFor=\"let product of productList2\">{{ product.name }}</mat-list-item>\n    </mat-list>\n\n      </div>\n    </div>\n\n    <div class=\"row\" *ngIf=\"isMessage\">\n        <div class=\"col-lg-12\">\n            <div [class]=\"errorMessage\">\n              {{message}}\n            </div>\n        </div>\n    </div>\n  </mat-card>\n\n\n</div>\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("\n<div class=\"container\">\n    <br>\n    <mat-progress-bar\n      mode=\"buffer\"\n      *ngIf=\"isLoading\">\n    </mat-progress-bar>\n    <h1 class=\"display-4\" >Shop Here <mat-icon color='primary'>add_shopping_cart</mat-icon></h1>\n    <br>\n    <mat-form-field  color='primary'>\n    <input placeholder=\"search for product here\" matInput (keyup) = \"filterText($event.target.value)\">\n    </mat-form-field>\n    <mat-card>\n    <div class=\"row\">\n      <div class=\"col-md-12\">\n        <table  class=\"table table-light\">\n          <thead>\n            <th>Name</th>\n            <th>Price</th>\n            <th>Quantity</th>\n            <th>Add To List</th>\n            <th>Remove From List</th>\n          </thead>\n          <tbody>\n            <tr *ngFor=\"let product of products\">\n              <td>{{product.name}}</td>\n              <td>R{{product.price}}</td>\n              <td>\n                <!--  <mat-slider aria-label=\"Quantity\" min = '1' max = '20' step = '2' thumbLabel tickInterval=\"1\" invert ></mat-slider> -->\n                <mat-select placeholder = 'Quantity' #selectetedItem id='product._id'>\n                  <mat-option value= 1 >1</mat-option>\n                  <mat-option value=\"2\">2</mat-option>\n                  <mat-option value=\"6\">6</mat-option>\n                  <mat-option value=\"8\">8</mat-option>\n                  <mat-option value=\"10\">10</mat-option>\n                  <mat-option value=\"15\">15</mat-option>\n                  <mat-option value=\"20\">20</mat-option>\n                </mat-select>\n              </td>\n              <td><button mat-raised-button color='primary'[disabled] = '!selectetedItem.selected' (click)=\"addTolist(selectetedItem, product._id)\">ADD</button></td>\n              <td><button mat-raised-button color='warn' [disabled] = '!selectetedItem.selected' (click)=\"removeFromlist(selectetedItem, product._id)\">REMOVE</button></td>\n            </tr>\n          </tbody>\n        </table>\n        <!-- Paginator component -->\n        <mat-paginator pageIndex = '0' #paginator [length]='docsTotal' pageSize = 4 [showFirstLastButtons] = \"true\" [pageSizeOptions]='[2, 4, 6, 8, 10]'></mat-paginator>\n\n      </div>\n\n\n    </div>\n\n    <div class=\"row\" *ngIf=\"isMessage\">\n        <div class=\"col-lg-12\">\n            <div [class]=\"errorMessage\">\n              {{message}}\n            </div>\n        </div>\n    </div>\n  </mat-card>\n  <br>\n  <div *ngIf=\"viewList\">\n   <h3>Total Due: R{{total}}</h3> <br> <button mat-raised-button color='accent' [disabled] = \"isMessage\" (click)=\"placeOrder()\">ORDER</button>\n\n  <mat-list>\n    <mat-list-item *ngFor=\"let product of productList2\">{{ product.name }} &nbsp; @ &nbsp; R{{product.price}} Each</mat-list-item>\n  </mat-list>\n\n    </div>\n</div>\n");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/profile/profile.component.html": 
@@ -83,7 +94,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("\n\n\n<div class=\"container col-9\">\n    <h1>Welcome to Your Profile</h1>\n\n    <mat-card>\n    <table>\n      <tr>\n        <td>\n            <mat-spinner *ngIf=\"isLoading\"></mat-spinner>\n            <form (submit) = \"onSaveProfile(profileForm)\" #profileForm=\"ngForm\" *ngIf=\"!isLoading\" >\n            <mat-form-field>\n              <input matInput type=\"text\" name=\"username\" placeholder=\"Username\" [(ngModel)]=\"username\" [disabled]=\"isFormDisabled\">\n            </mat-form-field>\n            <br>\n            <mat-form-field>\n                 <input #cellnumberV matInput type=\"text\" name=\"cellnumber\" placeholder=\"cell number\" [(ngModel)]=\"cellnumber\" required [disabled]=\"isFormDisabled\">\n                 <mat-error *ngIf=\"!cellnumberV.invalid\">Please provide cell number</mat-error>\n            </mat-form-field>\n            <br>\n             <mat-form-field>\n                  <input matInput type=\"text\" name=\"email\" placeholder=\"email\" [(ngModel)]=\"email\" [disabled]=\"isFormDisabled\">\n            </mat-form-field>\n              <br>\n             <mat-form-field>\n                 <input #streetnameV required  matInput type=\"text\" name=\"streetname\" placeholder=\"Street name\" [(ngModel)]=\"streetname\" [disabled]=\"isFormDisabled\">\n                 <mat-error  *ngIf=\"!streetnameV.invalid\">Please provide cell number</mat-error>\n\n             </mat-form-field>\n             <br>\n             <mat-form-field>\n                <input #housenumberV matInput type=\"text\" name=\"housenumber\" placeholder=\"House Number\" required [(ngModel)]=\"housenumber\" [disabled]=\"isFormDisabled\">\n                <mat-error *ngIf=\"!housenumberV.invalid\">Please provide House Number</mat-error>\n\n            </mat-form-field>\n            <br>\n            <table>\n                <tr>\n                  <td><button mat-raised-button (click)=\"onEddit()\" [hidden] = '!isEdit' type=\"button\">EDIT</button><button color=\"accent\" [hidden] = 'isEdit' mat-raised-button type=\"submit\">SAVE</button></td>\n                  <td><button mat-raised-button color =\"primary\" (click)=\"uploadImage.click()\">UPLOAD PICTURE</button></td>\n                  <input type=\"file\" #uploadImage hidden=\"true\" (change) = 'onImagePicker($event)'/>\n                </tr>\n              </table>\n            </form>\n        </td>\n        <td>\n\n        </td>\n        <td>\n          <div  *ngIf=\"image !== '' && image\">\n              <img [src] = 'image' alt='image here'>\n          </div>\n        </td>\n      </tr>\n    </table>\n    <!-- send message for a successfu update -->\n    <div class=\"alert-success\" *ngIf=\"isEditMessage\">\n      Profile update was a success!\n    </div>\n  </mat-card>\n\n\n      <!-- <div class=\"col-md-6\">\n\n        <img [src] = 'image' alt='image here'>\n\n      </div> -->\n\n\n\n\n\n</div>\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("\n\n\n<div class=\"container\">\n    <h1>Welcome to Your Profile</h1>\n\n    <mat-card>\n    <table>\n      <tr>\n        <td >\n            <mat-spinner *ngIf=\"isLoading\"></mat-spinner>\n            <form class=\"table\" (submit) = \"onSaveProfile(profileForm)\" #profileForm=\"ngForm\" *ngIf=\"!isLoading\" >\n            <mat-form-field >\n              <input matInput type=\"text\" name=\"username\" placeholder=\"Username\" [(ngModel)]=\"username\" [disabled]=\"isFormDisabled\">\n            </mat-form-field>\n            <br>\n            <mat-form-field>\n                 <input #cellnumberV matInput type=\"text\" name=\"cellnumber\" placeholder=\"cell number\" [(ngModel)]=\"cellnumber\" required [disabled]=\"isFormDisabled\">\n                 <mat-error *ngIf=\"!cellnumberV.invalid\">Please provide cell number</mat-error>\n            </mat-form-field>\n            <br>\n             <mat-form-field>\n                  <input matInput type=\"text\" name=\"email\" placeholder=\"email\" [(ngModel)]=\"email\" [disabled]=\"isFormDisabled\">\n            </mat-form-field>\n              <br>\n             <mat-form-field>\n                 <input #streetnameV required  matInput type=\"text\" name=\"streetname\" placeholder=\"Street name\" [(ngModel)]=\"streetname\" [disabled]=\"isFormDisabled\">\n                 <mat-error  *ngIf=\"!streetnameV.invalid\">Please provide cell number</mat-error>\n\n             </mat-form-field>\n             <br>\n             <mat-form-field>\n                <input #housenumberV matInput type=\"text\" name=\"housenumber\" placeholder=\"House Number\" required [(ngModel)]=\"housenumber\" [disabled]=\"isFormDisabled\">\n                <mat-error *ngIf=\"!housenumberV.invalid\">Please provide House Number</mat-error>\n\n            </mat-form-field>\n            <br>\n            <table>\n                <tr>\n                  <td><button mat-raised-button (click)=\"onEddit()\" [hidden] = '!isEdit' type=\"button\">EDIT</button><button color=\"accent\" [hidden] = 'isEdit' mat-raised-button type=\"submit\">SAVE</button></td>\n                  <td><button mat-raised-button color =\"primary\" (click)=\"uploadImage.click()\">UPLOAD PICTURE</button></td>\n                  <input type=\"file\" #uploadImage hidden=\"true\" (change) = 'onImagePicker($event)'/>\n                </tr>\n              </table>\n            </form>\n        </td>\n        <td> </td>\n        <td>\n          <div  *ngIf=\"image !== '' && image\">\n              <img class=\"img-rounded\"  [src] = 'image' alt='image here'>\n          </div>\n        </td>\n      </tr>\n    </table>\n    <div class=\"\">\n\n    </div>\n    <!-- send message for a successfu update -->\n    <div class=\"alert-success\" *ngIf=\"isEditMessage\">\n      Profile update was a success!\n    </div>\n  </mat-card>\n  <hr>\n  <div>\n    <button (click)=\"messageAdmin()\" class=\"btn btn-outline-success\">Contact Admin</button>\n  </div>\n\n      <!-- <div class=\"col-md-6\">\n\n        <img [src] = 'image' alt='image here'>\n\n      </div> -->\n\n\n\n\n\n</div>\n");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/signup/signup.component.html": 
@@ -425,12 +436,16 @@
             /* harmony import */ var _singin_singin_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./singin/singin.component */ "./src/app/singin/singin.component.ts");
             /* harmony import */ var _profile_profile_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./profile/profile.component */ "./src/app/profile/profile.component.ts");
             /* harmony import */ var _order_order_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./order/order.component */ "./src/app/order/order.component.ts");
+            /* harmony import */ var _services_route_guard_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./services/route-guard.service */ "./src/app/services/route-guard.service.ts");
+            /* harmony import */ var _services_route_guard_admin_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./services/route-guard-admin.service */ "./src/app/services/route-guard-admin.service.ts");
+            /* harmony import */ var _message_message_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./message/message.component */ "./src/app/message/message.component.ts");
             var routes = [
-                { path: 'dashboard', component: _dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_3__["DashboardComponent"] },
+                { path: 'dashboard', component: _dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_3__["DashboardComponent"], canActivate: [_services_route_guard_admin_service__WEBPACK_IMPORTED_MODULE_9__["RouteGuardAdminService"]] },
                 { path: 'signup', component: _signup_signup_component__WEBPACK_IMPORTED_MODULE_4__["SignupComponent"] },
                 { path: 'signin', component: _singin_singin_component__WEBPACK_IMPORTED_MODULE_5__["SinginComponent"] },
-                { path: 'profile', component: _profile_profile_component__WEBPACK_IMPORTED_MODULE_6__["ProfileComponent"] },
-                { path: 'order', component: _order_order_component__WEBPACK_IMPORTED_MODULE_7__["OrderComponent"] }
+                { path: 'profile', component: _profile_profile_component__WEBPACK_IMPORTED_MODULE_6__["ProfileComponent"], canActivate: [_services_route_guard_service__WEBPACK_IMPORTED_MODULE_8__["RouteGuardService"]] },
+                { path: 'order', component: _order_order_component__WEBPACK_IMPORTED_MODULE_7__["OrderComponent"], canActivate: [_services_route_guard_service__WEBPACK_IMPORTED_MODULE_8__["RouteGuardService"]] },
+                { path: 'message', component: _message_message_component__WEBPACK_IMPORTED_MODULE_10__["MessageComponent"], canActivate: [_services_route_guard_service__WEBPACK_IMPORTED_MODULE_8__["RouteGuardService"]] }
             ];
             var AppRoutingModule = /** @class */ (function () {
                 function AppRoutingModule() {
@@ -507,6 +522,7 @@
             /* harmony import */ var _singin_singin_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./singin/singin.component */ "./src/app/singin/singin.component.ts");
             /* harmony import */ var _profile_profile_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./profile/profile.component */ "./src/app/profile/profile.component.ts");
             /* harmony import */ var _order_order_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./order/order.component */ "./src/app/order/order.component.ts");
+            /* harmony import */ var _message_message_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./message/message.component */ "./src/app/message/message.component.ts");
             var AppModule = /** @class */ (function () {
                 function AppModule() {
                 }
@@ -522,7 +538,8 @@
                         _signup_signup_component__WEBPACK_IMPORTED_MODULE_12__["SignupComponent"],
                         _singin_singin_component__WEBPACK_IMPORTED_MODULE_13__["SinginComponent"],
                         _profile_profile_component__WEBPACK_IMPORTED_MODULE_14__["ProfileComponent"],
-                        _order_order_component__WEBPACK_IMPORTED_MODULE_15__["OrderComponent"]
+                        _order_order_component__WEBPACK_IMPORTED_MODULE_15__["OrderComponent"],
+                        _message_message_component__WEBPACK_IMPORTED_MODULE_16__["MessageComponent"]
                     ],
                     imports: [
                         _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
@@ -577,11 +594,13 @@
             /* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/user.service */ "./src/app/services/user.service.ts");
             /* harmony import */ var _services_order_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/order.service */ "./src/app/services/order.service.ts");
             /* harmony import */ var _services_product_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/product.service */ "./src/app/services/product.service.ts");
+            /* harmony import */ var _services_message_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/message.service */ "./src/app/services/message.service.ts");
             var DashboardComponent = /** @class */ (function () {
-                function DashboardComponent(userService, orderService, productService) {
+                function DashboardComponent(userService, orderService, productService, messageServive) {
                     this.userService = userService;
                     this.orderService = orderService;
                     this.productService = productService;
+                    this.messageServive = messageServive;
                     this.Users = [];
                     this.products = [];
                     this.viewOrders = false;
@@ -599,6 +618,11 @@
                     this.isViewAllUsers = false;
                     this.isAddNewProduct = false;
                     this.isEditProduct = false;
+                    // editing the user role
+                    this.editRole = false;
+                    this.messageReply = '';
+                    this.isReply = false;
+                    this.isRead = false;
                 }
                 DashboardComponent.prototype.viewUserOrders = function (id) {
                     var _this = this;
@@ -701,6 +725,28 @@
                     this.addProduct(null);
                 };
                 DashboardComponent.prototype.viewAllMessages = function () {
+                    var _this = this;
+                    this.isViewAllOrders = false;
+                    this.isViewAllUsers = false;
+                    this.isViewAllMessages = true;
+                    this.viewOrders = false;
+                    this.isAddNewProduct = false;
+                    this.isEditProduct = false;
+                    this.messageServive.getMessages().subscribe(function (messages) {
+                        _this.messages = messages;
+                    });
+                };
+                DashboardComponent.prototype.replyMessage = function (userId) {
+                    var _this = this;
+                    this.messageServive.replyMessage(userId, this.messageReply).subscribe(function (msg) {
+                        if (msg) {
+                            _this.isReply = true;
+                            setTimeout(function () {
+                                _this.isReply = false;
+                                _this.messageReply = '';
+                            }, 3000);
+                        }
+                    });
                 };
                 // to get all products
                 DashboardComponent.prototype.getProducts = function () {
@@ -749,12 +795,24 @@
                         _this.viewAllOrders();
                     });
                 };
+                DashboardComponent.prototype.saveUserRole = function (id, form) {
+                    var _this = this;
+                    this.userService.updateUserRole(id, form.value).subscribe(function (roleUpdate) {
+                        if (roleUpdate) {
+                            _this.editRole = true;
+                            setTimeout(function () {
+                                _this.editRole = false;
+                            }, 3000);
+                        }
+                    });
+                };
                 return DashboardComponent;
             }());
             DashboardComponent.ctorParameters = function () { return [
                 { type: _services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"] },
                 { type: _services_order_service__WEBPACK_IMPORTED_MODULE_3__["OrderService"] },
-                { type: _services_product_service__WEBPACK_IMPORTED_MODULE_4__["ProductService"] }
+                { type: _services_product_service__WEBPACK_IMPORTED_MODULE_4__["ProductService"] },
+                { type: _services_message_service__WEBPACK_IMPORTED_MODULE_5__["MessageService"] }
             ]; };
             DashboardComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -762,7 +820,8 @@
                     template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./dashboard.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/dashboard/dashboard.component.html")).default,
                     styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./dashboard.component.css */ "./src/app/dashboard/dashboard.component.css")).default]
                 }),
-                tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"], _services_order_service__WEBPACK_IMPORTED_MODULE_3__["OrderService"], _services_product_service__WEBPACK_IMPORTED_MODULE_4__["ProductService"]])
+                tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"], _services_order_service__WEBPACK_IMPORTED_MODULE_3__["OrderService"],
+                    _services_product_service__WEBPACK_IMPORTED_MODULE_4__["ProductService"], _services_message_service__WEBPACK_IMPORTED_MODULE_5__["MessageService"]])
             ], DashboardComponent);
             /***/ 
         }),
@@ -827,21 +886,123 @@
             /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MenuComponent", function () { return MenuComponent; });
             /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
             /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/user.service */ "./src/app/services/user.service.ts");
+            /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
             var MenuComponent = /** @class */ (function () {
-                function MenuComponent() {
+                function MenuComponent(userService, router) {
+                    this.userService = userService;
+                    this.router = router;
+                    this.userLoggedin = false;
                 }
                 MenuComponent.prototype.ngOnInit = function () {
+                    // this.userLoggedin = this.userService.isUserAdmin();
+                };
+                MenuComponent.prototype.signOut = function () {
+                    sessionStorage.clear();
+                    console.log('something here');
+                    this.router.navigateByUrl('/signin');
                 };
                 return MenuComponent;
             }());
+            MenuComponent.ctorParameters = function () { return [
+                { type: _services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"] },
+                { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }
+            ]; };
             MenuComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
                     selector: 'app-menu',
                     template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./menu.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/menu/menu.component.html")).default,
                     styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./menu.component.css */ "./src/app/menu/menu.component.css")).default]
                 }),
-                tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+                tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
             ], MenuComponent);
+            /***/ 
+        }),
+        /***/ "./src/app/message/message.component.css": 
+        /*!***********************************************!*\
+          !*** ./src/app/message/message.component.css ***!
+          \***********************************************/
+        /*! exports provided: default */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL21lc3NhZ2UvbWVzc2FnZS5jb21wb25lbnQuY3NzIn0= */");
+            /***/ 
+        }),
+        /***/ "./src/app/message/message.component.ts": 
+        /*!**********************************************!*\
+          !*** ./src/app/message/message.component.ts ***!
+          \**********************************************/
+        /*! exports provided: MessageComponent */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MessageComponent", function () { return MessageComponent; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _services_message_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/message.service */ "./src/app/services/message.service.ts");
+            var MessageComponent = /** @class */ (function () {
+                function MessageComponent(messageServive) {
+                    this.messageServive = messageServive;
+                    this.message = '';
+                    this.subject = '';
+                    this.userId = '';
+                    this.msgSuccess = false;
+                    this.isDeleted = false;
+                }
+                MessageComponent.prototype.ngOnInit = function () {
+                    this.userId = sessionStorage.getItem('id');
+                    this.getMessages();
+                };
+                MessageComponent.prototype.sendMessage = function () {
+                    var _this = this;
+                    var realMessage = { subject: this.subject, message: this.message, user: sessionStorage.getItem('id') };
+                    this.subject = '';
+                    this.message = '';
+                    this.messageServive.createMessage(realMessage).subscribe(function (mess) {
+                        if (mess) {
+                            _this.msgSuccess = true;
+                        }
+                        _this.ngOnInit();
+                        setTimeout(function () {
+                            _this.msgSuccess = false;
+                        }, 3000);
+                    });
+                };
+                MessageComponent.prototype.getMessages = function () {
+                    var _this = this;
+                    this.messageServive.getMessages().subscribe(function (messages) {
+                        _this.messages = messages;
+                    });
+                };
+                MessageComponent.prototype.getMyMessages = function () {
+                    this.ngOnInit();
+                };
+                MessageComponent.prototype.deleteConvo = function (id) {
+                    var _this = this;
+                    this.messageServive.deleteConvo(id).subscribe(function (deleted) {
+                        if (deleted) {
+                            _this.isDeleted = true;
+                        }
+                        _this.ngOnInit();
+                        setTimeout(function () {
+                            _this.isDeleted = false;
+                        }, 3000);
+                    });
+                };
+                return MessageComponent;
+            }());
+            MessageComponent.ctorParameters = function () { return [
+                { type: _services_message_service__WEBPACK_IMPORTED_MODULE_2__["MessageService"] }
+            ]; };
+            MessageComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+                    selector: 'app-message',
+                    template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./message.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/message/message.component.html")).default,
+                    styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./message.component.css */ "./src/app/message/message.component.css")).default]
+                }),
+                tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_message_service__WEBPACK_IMPORTED_MODULE_2__["MessageService"]])
+            ], MessageComponent);
             /***/ 
         }),
         /***/ "./src/app/order/order.component.css": 
@@ -920,17 +1081,16 @@
                     console.log(form.value, productID);
                     var quantity = 1;
                     quantity = form.value;
-                    this.productsList.push(productID);
+                    this.productsList.push(productID.trim());
                     console.log(this.productsList);
                     this.products.forEach(function (element) {
-                        if (element._id === productID) {
+                        if (_this.productList2.indexOf(element) === -1) {
                             _this.productList2.push(element);
                             _this.viewList = true;
                             _this.total += element.price * quantity;
                         }
                     });
                     this.quantity = quantity;
-                    console.log('QUATITY' + quantity);
                 };
                 // remove from list
                 OrderComponent.prototype.removeFromlist = function (form, productID) {
@@ -945,7 +1105,6 @@
                             if (_this.total < 0) {
                                 _this.total = 0;
                             }
-                            console.log();
                         }
                     });
                 };
@@ -970,7 +1129,6 @@
                             _this.errorMessage = 'alert alert-warning';
                             _this.message = 'Something went wrong :(, try Signing in again';
                         }
-                        console.log(respose);
                     }, function (err) {
                         if (err) {
                             _this.isMessage = true;
@@ -1022,7 +1180,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("img {\r\n  height: 23rem;\r\n  margin: 3rem 1\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcHJvZmlsZS9wcm9maWxlLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxhQUFhO0VBQ2I7QUFDRiIsImZpbGUiOiJzcmMvYXBwL3Byb2ZpbGUvcHJvZmlsZS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW1nIHtcclxuICBoZWlnaHQ6IDIzcmVtO1xyXG4gIG1hcmdpbjogM3JlbSAxXHJcbn1cclxuIl19 */");
+            /* harmony default export */ __webpack_exports__["default"] = ("img {\r\n  height: 23rem;\r\n  margin: 3rem 1;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcHJvZmlsZS9wcm9maWxlLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxhQUFhO0VBQ2IsY0FBYztBQUNoQiIsImZpbGUiOiJzcmMvYXBwL3Byb2ZpbGUvcHJvZmlsZS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW1nIHtcclxuICBoZWlnaHQ6IDIzcmVtO1xyXG4gIG1hcmdpbjogM3JlbSAxO1xyXG59XHJcbiJdfQ== */");
             /***/ 
         }),
         /***/ "./src/app/profile/profile.component.ts": 
@@ -1037,9 +1195,11 @@
             /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
             /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
             /* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/user.service */ "./src/app/services/user.service.ts");
+            /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
             var ProfileComponent = /** @class */ (function () {
-                function ProfileComponent(userService) {
+                function ProfileComponent(userService, router) {
                     this.userService = userService;
+                    this.router = router;
                     // disabling the form
                     this.isFormDisabled = false;
                     this.isEdit = true;
@@ -1065,7 +1225,6 @@
                         _this.streetname = user.streetname;
                         _this.housenumber = user.housenumber;
                         _this.image = user.image.trim();
-                        console.log(_this.image);
                         if (_this.cellnumber === '000 0000 000') {
                             _this.cellnumber = '';
                         }
@@ -1075,7 +1234,6 @@
                         if (_this.housenumber.trim() === 'House Number Needed') {
                             _this.housenumber = '';
                         }
-                        console.log(_this.User);
                     }, function (err) {
                         console.log(err);
                     });
@@ -1116,10 +1274,14 @@
                     };
                     reader.readAsDataURL(file);
                 };
+                ProfileComponent.prototype.messageAdmin = function () {
+                    this.router.navigateByUrl('/message');
+                };
                 return ProfileComponent;
             }());
             ProfileComponent.ctorParameters = function () { return [
-                { type: _services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"] }
+                { type: _services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"] },
+                { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }
             ]; };
             ProfileComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -1127,8 +1289,50 @@
                     template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./profile.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/profile/profile.component.html")).default,
                     styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./profile.component.css */ "./src/app/profile/profile.component.css")).default]
                 }),
-                tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"]])
+                tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
             ], ProfileComponent);
+            /***/ 
+        }),
+        /***/ "./src/app/services/message.service.ts": 
+        /*!*********************************************!*\
+          !*** ./src/app/services/message.service.ts ***!
+          \*********************************************/
+        /*! exports provided: MessageService */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MessageService", function () { return MessageService; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+            var MessageService = /** @class */ (function () {
+                function MessageService(http) {
+                    this.http = http;
+                }
+                MessageService.prototype.createMessage = function (messageData) {
+                    return this.http.post('api/message', messageData);
+                };
+                MessageService.prototype.getMessages = function () {
+                    return this.http.get('api/messages');
+                };
+                MessageService.prototype.deleteConvo = function (id) {
+                    return this.http.delete('api/messages/' + id);
+                };
+                MessageService.prototype.replyMessage = function (msgID, message) {
+                    var msg = { message: message };
+                    return this.http.post('api/message/reply/' + msgID, msg);
+                };
+                return MessageService;
+            }());
+            MessageService.ctorParameters = function () { return [
+                { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
+            ]; };
+            MessageService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+                    providedIn: 'root'
+                }),
+                tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
+            ], MessageService);
             /***/ 
         }),
         /***/ "./src/app/services/order.service.ts": 
@@ -1214,6 +1418,87 @@
             ], ProductService);
             /***/ 
         }),
+        /***/ "./src/app/services/route-guard-admin.service.ts": 
+        /*!*******************************************************!*\
+          !*** ./src/app/services/route-guard-admin.service.ts ***!
+          \*******************************************************/
+        /*! exports provided: RouteGuardAdminService */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RouteGuardAdminService", function () { return RouteGuardAdminService; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user.service */ "./src/app/services/user.service.ts");
+            var RouteGuardAdminService = /** @class */ (function () {
+                function RouteGuardAdminService(userService) {
+                    this.userService = userService;
+                }
+                RouteGuardAdminService.prototype.canActivate = function (route, state) {
+                    if (this.userService.isUserAdmin()) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                };
+                return RouteGuardAdminService;
+            }());
+            RouteGuardAdminService.ctorParameters = function () { return [
+                { type: _user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"] }
+            ]; };
+            RouteGuardAdminService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+                    providedIn: 'root'
+                }),
+                tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"]])
+            ], RouteGuardAdminService);
+            /***/ 
+        }),
+        /***/ "./src/app/services/route-guard.service.ts": 
+        /*!*************************************************!*\
+          !*** ./src/app/services/route-guard.service.ts ***!
+          \*************************************************/
+        /*! exports provided: RouteGuardService */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RouteGuardService", function () { return RouteGuardService; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+            /* harmony import */ var _user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./user.service */ "./src/app/services/user.service.ts");
+            var RouteGuardService = /** @class */ (function () {
+                function RouteGuardService(userService, router) {
+                    this.userService = userService;
+                    this.router = router;
+                }
+                RouteGuardService.prototype.canActivate = function (route, state) {
+                    if (this.userService.isUserLoggedIn()) {
+                        return true;
+                    }
+                    else {
+                        this.router.navigateByUrl('/signin');
+                        return false;
+                    }
+                };
+                return RouteGuardService;
+            }());
+            RouteGuardService.ctorParameters = function () { return [
+                { type: _user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"] },
+                { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }
+            ]; };
+            RouteGuardService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+                    providedIn: 'root'
+                })
+                // implement the routeguardservice from angular router and implement
+                // canActivate()  Method;
+                ,
+                tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+            ], RouteGuardService);
+            /***/ 
+        }),
         /***/ "./src/app/services/user.service.ts": 
         /*!******************************************!*\
           !*** ./src/app/services/user.service.ts ***!
@@ -1251,6 +1536,16 @@
                 };
                 UserService.prototype.updateUser2 = function (id, data) {
                     return this.httpClient.post('api/users/update/' + id, data);
+                };
+                UserService.prototype.isUserLoggedIn = function () {
+                    return sessionStorage.getItem('id') === null || sessionStorage.getItem('id') === '' ? false : true;
+                };
+                UserService.prototype.updateUserRole = function (id, role) {
+                    var userRole = { role: role };
+                    return this.httpClient.post('api/users/role/' + id, userRole);
+                };
+                UserService.prototype.isUserAdmin = function () {
+                    return sessionStorage.getItem('role') === 'admin' ? true : false;
                 };
                 return UserService;
             }());
@@ -1373,6 +1668,7 @@
                             // this.token = user.token;
                             console.log(user.user[0]._id);
                             sessionStorage.setItem('id', user.user[0]._id);
+                            sessionStorage.setItem('role', user.user[0].role);
                             _this.route.navigateByUrl('/profile');
                         }
                     }, function (err) {
