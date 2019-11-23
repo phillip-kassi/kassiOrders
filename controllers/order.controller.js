@@ -1,5 +1,6 @@
 var Order = require('../models/order');
 var User = require('../models/user');
+var Product = require('../models/product');
 
 //mail services
 var nodemailer = require('nodemailer');
@@ -13,16 +14,33 @@ exports.createOrder = (req, res) => {
   var userID = req.params.id;
   //split the concatinated('#') string of IDs(products)
   var productIDs  = req.body.products.split('#');
+  var quantityList = req.body.quantitylist.split('#');
+  var products = [];
 
   let order = new Order({
      totalprice: req.body.totalprice,
      products :productIDs
   });
+
+
+  var count = -1;
+  productIDs.forEach(element => {
+    Product.findById(element).then(product => {
+      if(product) {
+        count++;
+        let obj = {
+          productname: product.name,
+          productprice: product.price + ' x ' + quantityList[count],
+         };
+         products.push(obj);
+      }
+    })
+  });
+
   order.save().then(order =>{
     //if the order created successfully
     if(order)
     {
-
       User.findById(userID).then(user =>{
         Order.findByIdAndUpdate(order._id, {$set: {username: user.username}}, {new : true, useFindAndModify : true}).then(order =>{
 
@@ -38,7 +56,11 @@ exports.createOrder = (req, res) => {
           }
         })
 
-
+        var info = '';
+        products.forEach(element => {
+          info += '<br><tr><td>Product</td><td>-</td><td>' + element.productname + '</td></td>' +
+                  '<tr><td>Product Price</td><td>-</td><td>' + 'R' +element.productprice + '</td></td>'
+        });
         var mailOptions = {
           from: kassiordersEmail,
           to: user.email,
@@ -47,29 +69,31 @@ exports.createOrder = (req, res) => {
           html: '<h1>Your Order ' + user.username + ' </h1>' +
           ' <br>' +
           '<table>' +
-          '<tr><td>Order Total</td><td>-</td><td>'+ 'R'+order.totalprice +'</td></tr>' +
-          '<tr><td>Order Date</td><td>-</td><td>' + Date.now()  +     '</td></tr>' +
+
           '<tr><td>Contact</td><td>-</td><td>'+ user.cellnumber+      '</td></tr>' +
-          '<tr><td>Order ID</td><td>-</td><td>'+'order' + Date.now() + user.username + '</td></tr>' +
-          '</table>' + '<br><br>' +
+          '<tr><td>Order ID</td><td>-</td><td>' + order._id + '</td></tr>' +
+           info +
+          '<tr><td><h4>Order Total</h4></td><td>-</td><td><h4>'+ 'R'+order.totalprice +'</h4></td></tr>' +
+          '</table>' + '<br><br>'
+
+
+          +
           'THANK YOU! <br>' +
           'Kassi Orders!'
         }
-//'order-' + Date.now() + "-" + user.username
-        transport.sendMail(mailOptions, function(err, info) {
-          if(err)
-          {
-            console.log(err);
-          } else
-          {
 
-          }
-        })
-
+          transport.sendMail(mailOptions, function(err, info) {
+            if(err)
+            {
+              console.log(err)
+            } else
+            {
+              console.log(info);
+            }
+          });
         res.json(user);
        })
       }).catch(err =>{
-        console.log(err);
         res.json({message:'Order could not be placed for user: ' + user.username});
       })
     }
