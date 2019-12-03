@@ -19,7 +19,7 @@ mongoose.connect('mongodb://admin:admin1234%2A%2A@cluster0-shard-00-00-xbnnw.mon
 
 //trying to mamke changes//
 // mongoose.connect('mongodb://localhost:27017/Kassi', { useNewUrlParser: true, useUnifiedTopology: true }).then(() =>{
-//   console.log('connected to database');
+//   console.log('connected to database locally');
 // })
 // .catch(() => {
 //   console.log('could not connect to database :(');

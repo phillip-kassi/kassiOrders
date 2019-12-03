@@ -59,7 +59,7 @@ exports.createOrder = (req, res) => {
         var info = '';
         products.forEach(element => {
           info += '<br><tr><td>Product</td><td>-</td><td>' + element.productname + '</td></td>' +
-                  '<tr><td>Product Price</td><td>-</td><td>' + 'R' +element.productprice + '</td></td>'
+                  '<tr><td>Product Price</td><td>-</td><td>' + 'R' + element.productprice + '</td></td>'
         });
         var mailOptions = {
           from: kassiordersEmail,
@@ -70,14 +70,13 @@ exports.createOrder = (req, res) => {
           ' <br>' +
           '<table>' +
 
-          '<tr><td>Contact</td><td>-</td><td>'+ user.cellnumber+      '</td></tr>' +
-          '<tr><td>Order ID</td><td>-</td><td>' + order._id + '</td></tr>' +
+          '<tr><td>Contact</td><td>-</td><td>kassiorders@gmail.com' +      '</td></tr>' +
+          '<tr><td>Order ID</td><td>-</td><td><a href="http://kassi-orders.herokuapp.com/signin">' + order._id + '</a></td></tr>' +
            info +
           '<tr><td><h4>Order Total</h4></td><td>-</td><td><h4>'+ 'R'+order.totalprice +'</h4></td></tr>' +
-          '</table>' + '<br><br>'
+          '</table>' + '<br><br>'+
 
 
-          +
           'THANK YOU! <br>' +
           'Kassi Orders!'
         }
@@ -85,10 +84,10 @@ exports.createOrder = (req, res) => {
           transport.sendMail(mailOptions, function(err, info) {
             if(err)
             {
-              console.log(err)
+              res.json(err);
             } else
             {
-              console.log(info);
+              res.json(info);
             }
           });
         res.json(user);
