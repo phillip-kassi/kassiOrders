@@ -46,7 +46,6 @@ var storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now() + '-' + file.originalname)
-    console.log(file);
   }
 
 })
@@ -60,7 +59,6 @@ app.post("/api/update/:id", multer({storage: storage}).single("image"),(req, res
   let url = req.protocol + "://" + req.get('host');
   let id = req.params.id;
   User.findByIdAndUpdate(id,{$set: {image: url + '/images/' + req.file.filename}}).exec().then( image => {
-    console.log(image)
   });
  })
 //
