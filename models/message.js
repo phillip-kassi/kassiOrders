@@ -10,7 +10,7 @@ var messageSchema = mongoose.Schema({
   date: {type: Date, require: false, default: Date.now()},
   subject: {type: String},
   category: {type: String, require: false, default: 'General'},
-  adminmsg: {type: String, require: false, default: 'Admin will reply soon Thanks for your patience'},
+  adminmsg: {type: String, require: false, default: 'Admin will reply soon, Thanks for your patience'},
   read: {type: Boolean, require: false, default: false}
 });
 

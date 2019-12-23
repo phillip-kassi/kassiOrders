@@ -11,7 +11,6 @@ exports.createProduct = (req, res) =>
   product.save().then(product => {
     res.json(product);
   }).catch(err => {
-    console.log(err);
     res.json({message:'could not create produt'});
   })
 }
@@ -21,7 +20,7 @@ exports.getProducts = (req, res) =>
 var page =  req.query.page;
 var perPage = req.query.perPage;
 var filter = req.query.filter;
-  const options = {
+  const options1 = {
     page: parseInt(page),
     limit: parseInt(perPage),
     sort: {name :'asc'}
@@ -36,10 +35,9 @@ var filter = req.query.filter;
   }
 
 
-Prouct.paginate(query, options).then(products => {
+Prouct.paginate(query).then(products => {
     res.json(products);
   }).catch(err => {
-    console.log(err);
     res.json({message:'could not retrieve products'});
   })
 }
@@ -50,7 +48,6 @@ exports.deleteProduct = (req, res) =>
     res.json(product);
   }).catch(err => {
     res.json({message:'could not delete product'})
-    console.log(err);
 
   })
 
@@ -60,7 +57,6 @@ exports.updateProduct =  (req, res) => {
   Prouct.findByIdAndUpdate(id,{$set: {name: req.body.name, price:req.body.price}}, {new : true, useFindAndModify : true}).exec().then(product => {
     res.json(product);
   }).catch(err => {
-    console.log(err);
     res.json({message:'could not update product'});
   })
 }

@@ -26,19 +26,44 @@ exports.createUser = (req, res) =>
 
     var pageSize = +req.query.pageSize;
     var page = +req.query.currentPage;
-    console.log(pageSize, page);
     var findUsers = User.find();
+    var filter = req.query.filter;
 
-    if(page && pageSize)
+    const options = {
+      page: parseInt(page),
+      limit: 5,
+      sort: {username :'asc'}
+    };
+
+    if(page && pageSize && !filter)
     {
       findUsers.skip(pageSize * (page - 1)).limit(pageSize);
     }
 
-    findUsers.then(users =>{
-      res.json(users);
-    }).catch(err => {
-      res.json({message:'could not find users'});
-    });
+    else if(filter !== '')
+    {
+      //when filtering, set options to ignore the upper or lower cases and to accept incomplete words
+      const query = {};
+
+      query.username = {$regex: filter, $options: '-i'};
+      console.log(query);
+      User.paginate(query, options).then(users => {
+        res.json(users.docs);
+      }).catch(err => {
+        res.json(err)
+      });
+    }
+
+
+    if(!filter)
+    {
+      findUsers.then(users =>{
+        res.json(users);
+      }).catch(err => {
+        res.json({message:'could not find users'});
+      });
+    }
+
 
   }
 

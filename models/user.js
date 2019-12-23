@@ -4,6 +4,7 @@ const deepPopulate = require('mongoose-deep-populate')(mongoose);
 //include those modes to succeed populations
 const Order = require('../models/order');
 const Product = require('../models/product');
+var mongoosePaginate = require('mongoose-paginate');
 
 
 
@@ -22,11 +23,13 @@ const  userSchema = mongoose.Schema({
   image: {type: String, require: false, default: 'https://kassi-orders.herokuapp.com/images/default.jpg'}
 });
 
+userSchema.plugin(mongoosePaginate);
 userSchema.plugin(deepPopulate,{
   whitelist: [
     'orders',
     'orders.products',
   ]
 });
+
 
 module.exports = mongoose.model('User', userSchema);
