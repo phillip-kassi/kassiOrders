@@ -23,7 +23,6 @@ exports.createMessage = (req, res) =>
 exports.getMessages = (req, res) =>
 {
   Message.find().deepPopulate('user').then(messages => {
-    console.log(messages);
     res.json(messages);
   }).catch(err => {
     res.json(err);
