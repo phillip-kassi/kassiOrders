@@ -1,6 +1,13 @@
 var User = require('../models/user');
 var jwt =  require('jsonwebtoken');
 //create new user
+
+//mailing service
+var nodemailer = require('nodemailer');
+var password = 'Dopeboi234**';
+var kassiordersEmail = 'kassiorders@gmail.com';
+
+
 exports.createUser = (req, res) =>
   {
     let user = new User({
@@ -14,6 +21,52 @@ exports.createUser = (req, res) =>
 
     user.save().then(user => {
       res.json(user);
+
+      var transport = nodemailer.createTransport({
+        service:'gmail',
+        auth: {
+          user: kassiordersEmail,
+          pass: password
+        }
+      })
+
+
+      var admin = 'philliphlapa2015@gmail.com';
+
+      //mail options, set the json object up
+      var mailOptions =
+      {
+        from: kassiordersEmail,
+        to: admin,
+        subject: 'Sign Up',
+        text: 'New User Alert!',
+        html: '<h1>A new user Has been Created! ' +  ':-)' + ' </h1>' +
+        ' <br>' +
+        '<table>' +
+        //signupdate
+        '<tr><td>Username</td><td>-</td><td>' + user.username +      '</td></tr>' +
+        '<tr><td>Contact</td><td>-</td><td>' + user.email +      '</td></tr>' +
+        '<tr><td>User ID</td><td>-</td><td><a href="">' + user._id + '</a></td></tr>' +
+        '<tr><td>Sign Up Date</td><td>-</td><td>' + user.signupdate +      '</td></tr>' +
+
+        '</table>' + '<br><br>'+
+
+        'Regards! <br>' +
+        'Kassi Orders!'
+      }
+
+      //now send the mail
+      transport.sendMail(mailOptions, function(err, info) {
+        if(err)
+        {
+          res.json(err);
+        } else
+        {
+          res.json(info);
+        }
+      });
+      ///////////////////////////////////////
+
     }).catch(err =>{
       res.json({err:err});
     });

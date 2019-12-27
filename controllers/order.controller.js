@@ -8,106 +8,119 @@ var password = 'Dopeboi234**';
 var kassiordersEmail = 'kassiorders@gmail.com';
 
 //create order
+try {
+  exports.createOrder = (req, res) => {
 
-exports.createOrder = (req, res) => {
+    var userID = req.params.id;
+    //split the concatinated('#') string of IDs(products)
+    var productIDs  = req.body.products.split('#');
+    var quantityList = req.body.quantitylist.split('#');
+    var products = [];
 
-  var userID = req.params.id;
-  //split the concatinated('#') string of IDs(products)
-  var productIDs  = req.body.products.split('#');
-  var quantityList = req.body.quantitylist.split('#');
-  var products = [];
-
-  let order = new Order({
-     totalprice: req.body.totalprice,
-     products :productIDs
-  });
-
-
-  var count = -1;
-  productIDs.forEach(element => {
-    Product.findById(element).then(product => {
-      if(product) {
-        count++;
-        let obj = {
-          productname: product.name,
-          productprice: product.price + ' x ' + quantityList[count],
-         };
-         products.push(obj);
-      }
-    })
-  });
-
-  order.save().then(order =>{
-    //if the order created successfully
-    if(order)
-    {
-      User.findById(userID).then(user =>{
-        Order.findByIdAndUpdate(order._id, {$set: {username: user.username}}, {new : true, useFindAndModify : true}).then(order =>{
-
-        })
-       user.orders.push(order._id);
-       user.save().then(user =>{
-
-        var transport = nodemailer.createTransport({
-          service:'gmail',
-          auth: {
-            user: kassiordersEmail,
-            pass: password
-          }
-        })
-
-        var info = '';
-        products.forEach(element => {
-          info += '<br><tr><td>Product</td><td>-</td><td>' + element.productname + '</td></td>' +
-                  '<tr><td>Product Price</td><td>-</td><td>' + 'R' + element.productprice + '</td></td>'
-        });
-        var mailOptions = {
-          from: kassiordersEmail,
-          to: user.email,
-          subject: 'Your Order',
-          text: 'Order Summary:',
-          html: '<h1>Your Order ' + user.username + ' </h1>' +
-          ' <br>' +
-          '<table>' +
-
-          '<tr><td>Contact</td><td>-</td><td>kassiorders@gmail.com' +      '</td></tr>' +
-          '<tr><td>Order ID</td><td>-</td><td><a href="http://kassi-orders.herokuapp.com/signin">' + order._id + '</a></td></tr>' +
-           info +
-          '<tr><td><h4>Order Total</h4></td><td>-</td><td><h4>'+ 'R'+order.totalprice +'</h4></td></tr>' +
-          '</table>' + '<br><br>'+
+    let order = new Order({
+       totalprice: req.body.totalprice,
+       products :productIDs
+    });
 
 
-          'THANK YOU! <br>' +
-          'Kassi Orders!'
+    var count = -1;
+    productIDs.forEach(element => {
+      Product.findById(element).then(product => {
+        if(product) {
+          count++;
+          let obj = {
+            productname: product.name,
+            productprice: product.price + ' x ' + quantityList[count],
+           };
+           products.push(obj);
         }
-
-          transport.sendMail(mailOptions, function(err, info) {
-            if(err)
-            {
-              res.json(err);
-            } else
-            {
-              res.json(info);
-            }
-          });
-        res.json(user);
-       })
-      }).catch(err =>{
-        res.json({message:'Order could not be placed for user: ' + user.username});
       })
-    }
-    else
-    {
-      res.json({'message':'could not create order'});
-    }
-//if the order could not create
-  }).catch(err => {
-    res.json({message:'Error! create order'})
-    console.log("ORDER ERR: " + err);
-  })
+    });
+
+    order.save().then(order =>{
+      //if the order created successfully
+      if(order)
+      {
+        User.findById(userID).then(user =>{
+          Order.findByIdAndUpdate(order._id, {$set: {username: user.username}}, {new : true, useFindAndModify : true}).then(order =>{
+          })
+         user.orders.push(order._id);
+         user.save().then(user =>{
+
+          var transport = nodemailer.createTransport({
+            service:'gmail',
+            auth: {
+              user: kassiordersEmail,
+              pass: password
+            }
+          })
+
+          var admin = 'philliphlapa2015@gmail.com';
+          var info = '';
+          products.forEach(element => {
+            info += '<br><tr><td>Product</td><td>-</td><td>' + element.productname + '</td></td>' +
+                    '<tr><td>Product Price</td><td>-</td><td>' + 'R' + element.productprice + '</td></td>'
+          });
+
+          var receipients = [user.email, admin];
+
+          for(i = 0; i < 2; i++)
+          {
+
+          }
+
+          var mailOptions =
+          {
+            from: kassiordersEmail,
+            to: user.email,admin,
+            subject: 'Your Order',
+            text: 'Order Summary:',
+            html: '<h1>Your Order ' + user.username + ' </h1>' +
+            ' <br>' +
+            '<table>' +
+
+            '<tr><td>Contact</td><td>-</td><td>kassiorders@gmail.com' +      '</td></tr>' +
+            '<tr><td>Order ID</td><td>-</td><td><a href="http://kassi-orders.herokuapp.com/signin">' + order._id + '</a></td></tr>' +
+             info +
+            '<tr><td><h4>Order Total</h4></td><td>-</td><td><h4>'+ 'R'+order.totalprice +'</h4></td></tr>' +
+            '</table>' + '<br><br>'+
 
 
-};
+            'THANK YOU! <br>' +
+            'Kassi Orders!'
+          }
+
+            transport.sendMail(mailOptions, function(err, info) {
+              if(err)
+              {
+                res.json(err);
+              } else
+              {
+                res.json(info);
+              }
+            });
+          res.json(user);
+         })
+        }).catch(err =>{
+          res.json({message:'Order could not be placed for user: ' + user.username});
+        })
+      }
+      else
+      {
+        res.json({'message':'could not create order'});
+      }
+  //if the order could not create
+    }).catch(err => {
+      res.json({message:'Error! create order'})
+      console.log("ORDER ERR: " + err);
+    })
+
+
+  };
+} catch (error) {
+console.log("ERROR PHILLIP " + error);
+}
+
 
 exports.getOrders = (req, res) => {
 
