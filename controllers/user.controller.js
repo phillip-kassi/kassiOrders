@@ -31,7 +31,7 @@ exports.createUser = (req, res) =>
       })
 
 
-      var admin = 'philliphlapa2015@gmail.com';
+      var admin = 'kassiorders@gmail.com';
 
       //mail options, set the json object up
       var mailOptions =

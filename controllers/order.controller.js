@@ -72,7 +72,7 @@ try {
           var mailOptions =
           {
             from: kassiordersEmail,
-            to: user.email,admin,
+            to: user.email,
             subject: 'Your Order',
             text: 'Order Summary:',
             html: '<h1>Your Order ' + user.username + ' </h1>' +
@@ -96,7 +96,43 @@ try {
                 res.json(err);
               } else
               {
-                res.json(info);
+
+                var info = '';
+                products.forEach(element => {
+                  info += '<br><tr><td>Product</td><td>-</td><td>' + element.productname + '</td></td>' +
+                          '<tr><td>Product Price</td><td>-</td><td>' + 'R' + element.productprice + '</td></td>'
+                });
+
+                var mailOptions =
+                {
+                  from: kassiordersEmail,
+                  to: 'kassiorders@gmail.com',
+                  subject: 'Order',
+                  text: 'Order By: ' + user.username,
+                  html: '<h1>New Order Alert! <br> Order By: ' + user.username + '</h1>' +
+                  ' <br>' +
+                  '<table>' +
+
+                  '<tr><td>Time</td><td>-</td>' +  order.orderdate +   '</td></tr>' +
+                  '<tr><td>Contact</td><td>-</td>' +  user.email +   '</td></tr>' +
+                  '<tr><td>Cell</td><td>-</td>' +  user.cellnumber +   '</td></tr>' +
+                  '<tr><td>Username</td><td>-</td>' +  user.username +   '</td></tr>' +
+                  '<tr><td>Order ID</td><td>-</td><td><a href="http://kassi-orders.herokuapp.com/signin">' + order._id + '</a></td></tr>' +
+                   info +
+                  '<tr><td><h4>Order Total</h4></td><td>-</td><td><h4>'+ 'R'+order.totalprice +'</h4></td></tr>' +
+                  '</table>' + '<br><br>'+
+
+
+                  'Regards! <br>' +
+                  'Kassi Orders!'
+                }
+                transport.sendMail(mailOptions, function(err, info) {
+                  if(info) {
+                    res.json(info)
+                  } else {
+                    res.json(err);
+                  }
+                })
               }
             });
           res.json(user);
