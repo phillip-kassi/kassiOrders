@@ -13,7 +13,7 @@ exports.createMessage = (req, res) =>
   let message =  new Message({
     message : messageData.message,
     subject : messageData.subject,
-    user : messageData.user
+    user : messageData.user,
   });
 
   var userEmail = '';

@@ -9,6 +9,7 @@ var orderSchema = mongoose.Schema({
   totalprice: {type: String, require: true},
   orderdate: {type: Date, require: false, default: Date.now()},
   username: {type: String},
+  userid: {type: String},
   status: {type: Boolean, default: false}
 
 });

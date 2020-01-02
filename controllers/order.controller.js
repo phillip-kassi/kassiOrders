@@ -19,7 +19,8 @@ try {
 
     let order = new Order({
        totalprice: req.body.totalprice,
-       products :productIDs
+       products :productIDs,
+       userid: userID
     });
 
 
