@@ -190,10 +190,9 @@ exports.acceptOrder = (req, res) =>
 
   Order.findByIdAndUpdate(data.orderid, {$set: {status: true}}, {new : true, useFindAndModify : true}).then(order =>{
     if(order) {
+      res.json(order);
       User.findById(data.userid).then(user => {
         if(user) {
-          res.json(order);
-
           var transport = nodemailer.createTransport({
             service:'gmail',
             auth: {
@@ -224,10 +223,10 @@ exports.acceptOrder = (req, res) =>
       transport.sendMail(mailOptions, function(err, info) {
         if(err)
         {
-          res.json(err);
+          console.log(err);
         } else
         {
-          res.json(info);
+         console.log(info);
         }
       });
 
