@@ -17,10 +17,11 @@ router.post('/users/role/:id', userController.updateRole);
 
 router.get('/orders', orderController.getOrders);
 router.get('/orders/:id', orderController.getOrder);
+router.post('/orders/accept', orderController.acceptOrder);
 router.delete('/orders/:id', orderController.deleteOrder);
 router.get('/users/:id/orders', orderController.getUserOrders);
 router.post('/users/:id/order', orderController.createOrder);
-//
+
 
 //product
 router.post('/product', productController.createProduct);

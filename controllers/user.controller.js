@@ -150,6 +150,7 @@ exports.createUser = (req, res) =>
   {
     var password = req.params.password;
     var username = req.params.username;
+
      User.find({username: username, password:password}).then( user => {
         if(user.length !== 0)
         {

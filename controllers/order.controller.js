@@ -183,6 +183,59 @@ exports.deleteOrder = (req, res) =>
   })
 }
 
+exports.acceptOrder = (req, res) =>
+{
+  var data = req.body;
+
+  Order.findByIdAndUpdate(data.orderid, {$set: {status: true}}, {new : true, useFindAndModify : true}).then(order =>{
+    if(order) {
+      User.findById(data.userid).then(user => {
+        if(user) {
+          res.json(order);
+
+          var transport = nodemailer.createTransport({
+            service:'gmail',
+            auth: {
+              user: kassiordersEmail,
+              pass: password
+            }
+          })
+
+           //mail options, set the json object up
+      var mailOptions =
+      {
+        from: kassiordersEmail,
+        to: user.email,
+        subject: 'Order Acknowledgement',
+        text: 'Order Acknowledgement',
+        html: '<h1>Your Order</h1>' +
+        ' <br>' +
+        "Your Order has been recieved and it is on it's Way!" +
+       '<br>' +
+        "Please keep cash on you to pay for the order." +
+        '<br><br>'+
+
+        'Regards! <br>' +
+        'Kassi Orders!'
+      }
+
+      //now send the mail
+      transport.sendMail(mailOptions, function(err, info) {
+        if(err)
+        {
+          res.json(err);
+        } else
+        {
+          res.json(info);
+        }
+      });
+
+        }
+      }).catch(err => {res.json(err);})
+    }
+  }).catch(err => {res.json(err);});
+}
+
 //get a single order using a known ID
 
 exports.getOrder = (req, res) =>
