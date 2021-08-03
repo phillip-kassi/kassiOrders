@@ -10,7 +10,7 @@ var multer = require('multer');
 
 //when i'm conneting to a remote database
 //mongodb://<username>:<password>@cluster0-shard-00-00.xbnnw.mongodb.net:27017,cluster0-shard-00-01.xbnnw.mongodb.net:27017,cluster0-shard-00-02.xbnnw.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority
-mongoose.connect('mongodb://admin:admin1234%2A%2A@cluster0-shard-00-00.xbnnw.mongodb.net:27017,cluster0-shard-00-01.xbnnw.mongodb.net:27017,cluster0-shard-00-02.xbnnw.mongodb.net:27017/kassiOrdersDB?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority', { useNewUrlParser: true , useUnifiedTopology: true }).then(() =>{
+mongoose.connect('mongodb://admin:Admin1234%2A%2A@cluster0-shard-00-00.xbnnw.mongodb.net:27017,cluster0-shard-00-01.xbnnw.mongodb.net:27017,cluster0-shard-00-02.xbnnw.mongodb.net:27017/kassiOrdersDB?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority', { useNewUrlParser: true , useUnifiedTopology: true }).then(() =>{
   console.log('connected to database 4');
 })
 .catch(() => {
